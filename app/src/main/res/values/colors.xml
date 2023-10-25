@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="statusColor">#31DCFA</color>
+    <color name="colorFragment1">#FB7F7F</color>
+    <color name="view_navBg">#00AAE4</color>
 </resources>
