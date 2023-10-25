@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Synergia Softair</string>
+    <string name="open">Abrir</string>
+    <string name="close">Cerrar</string>
 </resources>
