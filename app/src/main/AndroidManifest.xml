@@ -21,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NavActivity" >
+        <activity android:name=".NavActivity"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

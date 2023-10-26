@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginTop="16dp"
-    android:layout_marginStart="16dp"
-    android:background="@color/white">
+    android:background="#D3D3D3">
     
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/logo"/>
 
     <TextView
@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed"
         android:paddingTop="8dp"
-        android:text="Diego Gonzalez"
+        android:layout_marginStart="25dp"
+        android:text="Usuario Administrador"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -27,8 +28,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/user_email"
+        android:textColor="@color/black"
         android:textSize="16sp"
-        android:text="it.diegogonzalez@gmail.com" />
+        android:layout_marginStart="25dp"
+        android:text="user.admin@gmail.com" />
 
     <View
         android:layout_width="match_parent"

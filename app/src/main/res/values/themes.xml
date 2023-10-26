@@ -8,6 +8,10 @@
         <item name="android:logo">@drawable/logo</item>
     </style>
 
+    <style name="AppTheme" parent="Theme.Material3.DayNight">
+        <!-- De este hereda el navActivity en el manifest, aca se muestra el menu hamburguesa -->
+    </style>
+
     <style name="Theme.PFT" parent="Base.Theme.PFT" />
     <style name="Theme.PFT.NoActionBar">
         <item name="windowActionBar">false</item>
