@@ -2,4 +2,9 @@
     <string name="app_name">Synergia Softair</string>
     <string name="open">Abrir</string>
     <string name="close">Cerrar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="medicion1">Medición 1</string>
+    <string name="medicion2">Medición 2</string>
+    <string name="guardar">Guardar</string>
 </resources>

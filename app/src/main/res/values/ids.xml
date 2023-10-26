@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="medicion1EditText" type="id" />
+    <item name="medicion2EditText" type="id" />
+    <item name="saveButton" type="id" />
+    <item name="medicionesRecyclerView" type="id" />
+    <item name="medicion1View" type="id" />
+    <item name="medicion2View" type="id" />
+    <item name="deleteButton" type="id" />
+</resources>
