@@ -11,22 +11,36 @@
         android:id="@+id/medicion1EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bgedittextmediciones"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-condensed"
+        android:padding="16dp"
         android:hint="Medición 1"
+        android:textColorHint="#595858"
         android:inputType="text" />
 
     <EditText
         android:id="@+id/medicion2EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
         android:hint="Medición 2"
+        android:background="@drawable/bgedittextmediciones"
+        android:textColor="@color/black"
+        android:padding="16dp"
         android:inputType="text"
+        android:textColorHint="#595858"
         android:layout_marginTop="16dp" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
+        style="@android:style/Widget.Button"
+        android:layout_width="177dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/login_btn_background"
+        android:fontFamily="sans-serif-condensed"
         android:text="Guardar"
-        android:layout_marginTop="16dp" />
+        android:textSize="18sp" />
 
 </LinearLayout>

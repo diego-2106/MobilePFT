@@ -27,11 +27,13 @@ class MainActivity : AppCompatActivity() {
             var username = editTextUser.text.toString()
             var password = editTextPassword.text.toString()
             try {
-                if (username.isEmpty()) {
-                    Toast.makeText(this, "El campo Usuario está vacío", Toast.LENGTH_SHORT).show()
+                if (username.isEmpty() && password.isEmpty()) {
+                    Toast.makeText(this, "Por favor rellena los campos", Toast.LENGTH_SHORT).show()
                 } else if (password.isEmpty()){
-                    Toast.makeText(this, "El campo Contraseña está vacío", Toast.LENGTH_SHORT).show()
-                } else {
+                    Toast.makeText(this, "El campo Contraseña es requerido", Toast.LENGTH_SHORT).show()
+                } else if (username.isEmpty())
+                    Toast.makeText(this, "El campo Usuario es requerido", Toast.LENGTH_SHORT).show()
+                else {
                     val intent = Intent(this, NavActivity::class.java)
                     startActivity(intent)
                 }
