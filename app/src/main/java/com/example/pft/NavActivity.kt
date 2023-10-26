@@ -19,21 +19,21 @@ class NavActivity : AppCompatActivity(){
 
 
         toggle = ActionBarDrawerToggle(this,drawerLayout, R.string.open, R.string.close)
-        drawerLayout.addDrawerListener(toggle)
+        drawerLayout.addDrawerListener(toggle) /*le defino al toggle como listener para que cambie de icono dependiendo si abre o no la nav*/
         toggle.syncState()
 
+        /*Lo que se hace aca es habilitar la flecha para ir hacia atras en caso de que este abierto el menu*/
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
         navView.setNavigationItemSelectedListener {
-
+            /*Toast de prueba cuando se cliquea un item*/
             when(it.itemId) {
-                R.id.nav_home -> Toast.makeText(applicationContext, "Has clickeado Inicio", Toast.LENGTH_SHORT).show()
-                R.id.mediciones -> Toast.makeText(applicationContext, "Has clickeado Mediciones", Toast.LENGTH_SHORT).show()
-                R.id.manual -> Toast.makeText(applicationContext, "Has clickeado Manual", Toast.LENGTH_SHORT).show()
-                R.id.settings -> Toast.makeText(applicationContext, "Has clickeado Ajustes", Toast.LENGTH_SHORT).show()
-                R.id.version -> Toast.makeText(applicationContext, "Has clickeado Version", Toast.LENGTH_SHORT).show()
-
+                R.id.nav_home -> Toast.makeText(applicationContext, "Clickeaste Inicio", Toast.LENGTH_SHORT).show()
+                R.id.mediciones -> Toast.makeText(applicationContext, "Clickeaste Mediciones", Toast.LENGTH_SHORT).show()
+                R.id.manual -> Toast.makeText(applicationContext, "Clickeaste Manual", Toast.LENGTH_SHORT).show()
+                R.id.settings -> Toast.makeText(applicationContext, "Clickeaste Ajustes", Toast.LENGTH_SHORT).show()
+                R.id.version -> Toast.makeText(applicationContext, "Clickeaste Version", Toast.LENGTH_SHORT).show()
             }
 
             true
