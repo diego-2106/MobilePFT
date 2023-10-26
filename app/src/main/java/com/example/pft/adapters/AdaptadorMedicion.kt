@@ -10,9 +10,9 @@ import com.example.pft.R
 import com.example.pft.models.Medicion
 
 class AdaptadorMedicion(
-    private val mediciones: MutableList<Medicion>,
+    private var mediciones: List<Medicion>,  // Cambiado a var para permitir actualizaciones
     val onDeleteClick: (Medicion) -> Unit,
-    val onItemSelected: (Medicion) -> Unit 
+    val onItemSelected: (Medicion) -> Unit
 ) : RecyclerView.Adapter<AdaptadorMedicion.MedicionViewHolder>() {
 
     inner class MedicionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,9 +31,15 @@ class AdaptadorMedicion(
         val medicion = mediciones[position]
         holder.medicion1View.text = medicion.medicion1
         holder.medicion2View.text = medicion.medicion2
-        holder.itemView.setOnClickListener { onItemSelected(medicion) }  // Aquí se llama al callback cuando se hace clic en un ítem
+        holder.itemView.setOnClickListener { onItemSelected(medicion) }
         holder.deleteButton.setOnClickListener { onDeleteClick(medicion) }
     }
 
     override fun getItemCount() = mediciones.size
+
+    // Método para actualizar las mediciones y notificar al RecyclerView
+    fun actualizarMediciones(nuevasMediciones: List<Medicion>) {
+        this.mediciones = nuevasMediciones
+        notifyDataSetChanged()  // Notificar cambios para que el RecyclerView se actualice
+    }
 }

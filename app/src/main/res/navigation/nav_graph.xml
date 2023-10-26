@@ -1,0 +1,27 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentoListaMediciones">
+
+    <fragment
+        android:id="@+id/fragmentoListaMediciones"
+        android:name="com.example.pft.fragments.FragmentoListaMediciones"
+        tools:layout="@layout/fragmento_lista_mediciones" >
+        <action
+            android:id="@+id/action_to_fragmentoEntradaMediciones"
+            app:destination="@id/fragmentoEntradaMediciones" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentoEntradaMediciones"
+        android:name="com.example.pft.fragments.FragmentoEntradaMediciones"
+        tools:layout="@layout/fragmento_entrada_mediciones">
+        <argument
+            android:name="medicionJson"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+    </fragment>
+
+</navigation>
