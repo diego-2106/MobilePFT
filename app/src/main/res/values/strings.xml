@@ -4,7 +4,7 @@
     <string name="close">Cerrar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="medicion1">Medición 1</string>
-    <string name="medicion2">Medición 2</string>
+    <string name="medicion_1">Medición 1</string>
+    <string name="medicion_2">Medición 2</string>
     <string name="guardar">Guardar</string>
 </resources>

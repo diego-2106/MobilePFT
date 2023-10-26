@@ -9,7 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pft.R
 import com.example.pft.models.Medicion
 
-class AdaptadorMedicion(private val mediciones: MutableList<Medicion>, val onDeleteClick: (Medicion) -> Unit) : RecyclerView.Adapter<AdaptadorMedicion.MedicionViewHolder>() {
+class AdaptadorMedicion(
+    private val mediciones: MutableList<Medicion>,
+    val onDeleteClick: (Medicion) -> Unit,
+    val onItemSelected: (Medicion) -> Unit 
+) : RecyclerView.Adapter<AdaptadorMedicion.MedicionViewHolder>() {
 
     inner class MedicionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val medicion1View: TextView = itemView.findViewById(R.id.medicion1View)
@@ -18,7 +22,8 @@ class AdaptadorMedicion(private val mediciones: MutableList<Medicion>, val onDel
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MedicionViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_medicion, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_medicion, parent, false)
         return MedicionViewHolder(view)
     }
 
@@ -26,6 +31,7 @@ class AdaptadorMedicion(private val mediciones: MutableList<Medicion>, val onDel
         val medicion = mediciones[position]
         holder.medicion1View.text = medicion.medicion1
         holder.medicion2View.text = medicion.medicion2
+        holder.itemView.setOnClickListener { onItemSelected(medicion) }  // Aquí se llama al callback cuando se hace clic en un ítem
         holder.deleteButton.setOnClickListener { onDeleteClick(medicion) }
     }
 

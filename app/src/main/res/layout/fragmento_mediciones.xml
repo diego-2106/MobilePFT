@@ -10,13 +10,13 @@
         android:id="@+id/medicion1EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/medicion1" />
+        android:hint="@string/medicion_1" />
 
     <EditText
         android:id="@+id/medicion2EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/medicion2"
+        android:hint="@string/medicion_2"
         android:layout_marginTop="8dp" />
 
     <Button
