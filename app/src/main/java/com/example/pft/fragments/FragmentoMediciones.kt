@@ -56,7 +56,9 @@ class FragmentoMediciones : Fragment() {
             } else {
                 // muestra mensaje de error en caso de que los campos estén vacíos
                 AlertDialog.Builder(requireContext())
+                    .setTitle("Atención!")
                     .setMessage("Ambos campos deben estar llenos")
+                    .setIcon(R.drawable.ic_baseline_warning_24)
                     .setPositiveButton("Ok") { dialog, _ ->
                         dialog.dismiss()
                     }

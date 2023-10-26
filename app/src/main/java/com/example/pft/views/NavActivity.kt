@@ -35,7 +35,7 @@ class NavActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     Toast.makeText(applicationContext, "Clickeaste Inicio", Toast.LENGTH_SHORT).show()
-                    // Cargar un fragmento o realizar otras acciones relacionadas con "Inicio"
+                    // Cargar un fragmento
                 }
                 R.id.mediciones -> {
                     val fragment = FragmentoMediciones()
@@ -46,15 +46,15 @@ class NavActivity : AppCompatActivity() {
                 }
                 R.id.manual -> {
                     Toast.makeText(applicationContext, "Clickeaste Manual", Toast.LENGTH_SHORT).show()
-                    // Cargar un fragmento o realizar otras acciones relacionadas con "Manual"
+                    // Cargar un fragmento
                 }
                 R.id.settings -> {
                     Toast.makeText(applicationContext, "Clickeaste Ajustes", Toast.LENGTH_SHORT).show()
-                    // Cargar un fragmento o realizar otras acciones relacionadas con "Ajustes"
+                    // Cargar un fragmento
                 }
                 R.id.version -> {
                     Toast.makeText(applicationContext, "Clickeaste Version", Toast.LENGTH_SHORT).show()
-                    // Cargar un fragmento o realizar otras acciones relacionadas con "Versión"
+                    // Cargar un fragmento
                 }
                 R.id.logout -> {
                     mostrarMensajeLogout()
