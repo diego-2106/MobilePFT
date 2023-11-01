@@ -19,10 +19,16 @@ class AdaptadorMedicion(
     inner class MedicionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val medicion1TextView: TextView = itemView.findViewById(R.id.medicion1TextView)
         private val medicion2TextView: TextView = itemView.findViewById(R.id.medicion2TextView)
+        private val deleteButton: Button = itemView.findViewById(R.id.deleteButton)
 
         fun bind(medicion: Medicion) {
             medicion1TextView.text = medicion.medicion1
             medicion2TextView.text = medicion.medicion2
+
+            deleteButton.setOnClickListener {
+                onDeleteClick(medicion)
+            }
+
             itemView.setOnClickListener {
                 onItemSelected(medicion)
             }
