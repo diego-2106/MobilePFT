@@ -37,10 +37,16 @@ class FragmentoMediciones : Fragment() {
 
         adaptadorMedicion = AdaptadorMedicion(
             mediciones,
+            // ... código para manejar el borrado ...
             onDeleteClick = { medicion ->
                 mediciones.remove(medicion)
                 adaptadorMedicion.notifyDataSetChanged()
             },
+            onUpdateClick = { medicion ->
+                // Aquí, implementa lo que debe suceder cuando se hace clic en actualizar
+                showEditDialog(medicion)
+            },
+            // ... código para manejar la selección de un elemento ...
             onItemSelected = { medicion ->
                 showEditDialog(medicion)
             }
@@ -54,7 +60,8 @@ class FragmentoMediciones : Fragment() {
             if (medicion1.isNotEmpty() && medicion2.isNotEmpty()) {
                 val medicion = Medicion(nextId++, medicion1, medicion2)
                 RepositorioMediciones.agregarMedicion(medicion)
-                adaptadorMedicion.notifyDataSetChanged()
+                mediciones.add(medicion) // Agrega la nueva medición a la lista local
+                adaptadorMedicion.notifyItemInserted(mediciones.size - 1) // Notificar al adaptador sobre la nueva medición
             } else {
                 // muestra mensaje de error en caso de que los campos estén vacíos
                 AlertDialog.Builder(requireContext())
@@ -70,15 +77,15 @@ class FragmentoMediciones : Fragment() {
     }
 
     private fun showEditDialog(medicion: Medicion) {
-        val builder = AlertDialog.Builder(requireContext())
-        val inflater = layoutInflater
-        val dialogLayout: View = inflater.inflate(R.layout.dialog_edit_medicion, null)
+        val dialogLayout = layoutInflater.inflate(R.layout.dialog_edit_medicion, null)
         val editMedicion1 = dialogLayout.findViewById<EditText>(R.id.editMedicion1)
         val editMedicion2 = dialogLayout.findViewById<EditText>(R.id.editMedicion2)
 
+        // Configurar los EditText con los valores actuales de la medicion
         editMedicion1.setText(medicion.medicion1)
         editMedicion2.setText(medicion.medicion2)
 
+        val builder = AlertDialog.Builder(requireContext())
         builder.setView(dialogLayout)
             .setPositiveButton("Guardar") { dialog, _ ->
                 val newMedicion1 = editMedicion1.text?.toString()
@@ -86,18 +93,28 @@ class FragmentoMediciones : Fragment() {
                 if (newMedicion1?.isNotEmpty() == true && newMedicion2?.isNotEmpty() == true) {
                     medicion.medicion1 = newMedicion1
                     medicion.medicion2 = newMedicion2
-                    adaptadorMedicion.notifyDataSetChanged()
+                    // Aquí asumo que necesitas actualizar la lista y luego notificar al adaptador
+                    val index = mediciones.indexOf(medicion)
+                    if (index != -1) {
+                        mediciones[index] = medicion
+                        adaptadorMedicion.notifyItemChanged(index)
+                    }
                 }
                 dialog.dismiss()
             }
             .setNegativeButton("Eliminar") { dialog, _ ->
-                mediciones.remove(medicion)
-                adaptadorMedicion.notifyDataSetChanged()
+                val index = mediciones.indexOf(medicion)
+                if (index != -1) {
+                    mediciones.removeAt(index)
+                    adaptadorMedicion.notifyItemRemoved(index)
+                }
                 dialog.dismiss()
             }
             .setNeutralButton("Cancelar") { dialog, _ ->
                 dialog.cancel()
             }
             .show()
+
     }
+
 }

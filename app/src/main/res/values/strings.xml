@@ -7,4 +7,5 @@
     <string name="medicion_1">Medición 1</string>
     <string name="medicion_2">Medición 2</string>
     <string name="guardar">Guardar</string>
+    <string name="cancelar" />
 </resources>

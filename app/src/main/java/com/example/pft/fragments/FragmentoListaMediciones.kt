@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pft.R
 import com.example.pft.adapters.AdaptadorMedicion
 import com.example.pft.data.RepositorioMediciones
+import com.example.pft.data.RepositorioMediciones.actualizarMedicion
 import com.example.pft.models.Medicion
 
 class FragmentoListaMediciones : Fragment() {
@@ -33,6 +34,7 @@ class FragmentoListaMediciones : Fragment() {
         adaptadorMedicion = AdaptadorMedicion(
             emptyList(),
             onDeleteClick = ::eliminarMedicion,
+            onUpdateClick = ::actualizarMedicion,
             onItemSelected = ::mostrarDetallesMedicion
         )
 
