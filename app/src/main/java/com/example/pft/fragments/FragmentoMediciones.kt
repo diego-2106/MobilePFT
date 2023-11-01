@@ -12,6 +12,7 @@ import com.example.pft.R
 import com.example.pft.adapters.AdaptadorMedicion
 import com.example.pft.models.Medicion
 import android.app.AlertDialog
+import com.example.pft.data.RepositorioMediciones
 
 class FragmentoMediciones : Fragment() {
 
@@ -51,7 +52,8 @@ class FragmentoMediciones : Fragment() {
             val medicion1 = medicion1EditText.text.toString()
             val medicion2 = medicion2EditText.text.toString()
             if (medicion1.isNotEmpty() && medicion2.isNotEmpty()) {
-                mediciones.add(Medicion(nextId++, medicion1, medicion2))
+                val medicion = Medicion(nextId++, medicion1, medicion2)
+                RepositorioMediciones.agregarMedicion(medicion)
                 adaptadorMedicion.notifyDataSetChanged()
             } else {
                 // muestra mensaje de error en caso de que los campos estén vacíos

@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pft.R
 import com.example.pft.adapters.AdaptadorMedicion
 import com.example.pft.data.RepositorioMediciones
+import com.example.pft.models.Medicion
 
 class FragmentoListaMediciones : Fragment() {
 
@@ -25,28 +28,40 @@ class FragmentoListaMediciones : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val medicionesRecyclerView: RecyclerView = view.findViewById(R.id.medicionesRecyclerView)
+        medicionesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         adaptadorMedicion = AdaptadorMedicion(
-            RepositorioMediciones.obtenerMediciones(),
-            onDeleteClick = { medicion ->
-                RepositorioMediciones.eliminarMedicion(medicion)
-                actualizarMediciones()
-            },
-            onItemSelected = { medicion ->
-                // Aquí podrías, por ejemplo, navegar al FragmentoEntradaMediciones
-                // pasando la medicion seleccionada como argumento.
-            }
+            emptyList(),
+            onDeleteClick = ::eliminarMedicion,
+            onItemSelected = ::mostrarDetallesMedicion
         )
 
         medicionesRecyclerView.adapter = adaptadorMedicion
+        actualizarMediciones()
+    }
+
+    private fun eliminarMedicion(medicion: Medicion) {
+        RepositorioMediciones.eliminarMedicion(medicion)
+        actualizarMediciones()
+    }
+
+    private fun mostrarDetallesMedicion(medicion: Medicion) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Detalles de la Medición")
+        builder.setMessage("Medición 1: ${medicion.medicion1}\nMedición 2: ${medicion.medicion2}")
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
+    private fun actualizarMediciones() {
+        val mediciones = RepositorioMediciones.obtenerMediciones()
+        adaptadorMedicion.actualizarMediciones(mediciones)
     }
 
     override fun onResume() {
         super.onResume()
         actualizarMediciones()
-    }
-
-    private fun actualizarMediciones() {
-        adaptadorMedicion.actualizarMediciones(RepositorioMediciones.obtenerMediciones())
     }
 }

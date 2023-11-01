@@ -5,14 +5,18 @@ import com.example.pft.models.Medicion
 object RepositorioMediciones {
 
     private val mediciones = mutableListOf<Medicion>()
-    private var nextId = 1
+    private var nextId = 1  // Inicializa un contador de ID
 
-    fun agregarMedicion(medicion1: String, medicion2: String) {
-        mediciones.add(Medicion(nextId++, medicion1, medicion2))
+    fun agregarMedicion(medicion: Medicion) {
+        mediciones.add(medicion)
     }
 
     fun obtenerMediciones(): List<Medicion> {
         return mediciones
+    }
+
+    fun generarId(): Int {
+        return nextId++  // Incrementa el contador para el próximo ID
     }
 
     fun eliminarMedicion(medicion: Medicion) {

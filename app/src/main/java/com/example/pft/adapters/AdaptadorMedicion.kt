@@ -10,36 +10,43 @@ import com.example.pft.R
 import com.example.pft.models.Medicion
 
 class AdaptadorMedicion(
-    private var mediciones: List<Medicion>,  // Cambiado a var para permitir actualizaciones
+
+    private var mediciones: List<Medicion>,
     val onDeleteClick: (Medicion) -> Unit,
     val onItemSelected: (Medicion) -> Unit
 ) : RecyclerView.Adapter<AdaptadorMedicion.MedicionViewHolder>() {
 
     inner class MedicionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val medicion1View: TextView = itemView.findViewById(R.id.medicion1View)
-        val medicion2View: TextView = itemView.findViewById(R.id.medicion2View)
-        val deleteButton: Button = itemView.findViewById(R.id.deleteButton)
+        private val medicion1TextView: TextView = itemView.findViewById(R.id.medicion1TextView)
+        private val medicion2TextView: TextView = itemView.findViewById(R.id.medicion2TextView)
+
+        fun bind(medicion: Medicion) {
+            medicion1TextView.text = medicion.medicion1
+            medicion2TextView.text = medicion.medicion2
+            itemView.setOnClickListener {
+                onItemSelected(medicion)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MedicionViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_medicion, parent, false)
-        return MedicionViewHolder(view)
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_medicion, parent, false)
+        return MedicionViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: MedicionViewHolder, position: Int) {
         val medicion = mediciones[position]
-        holder.medicion1View.text = medicion.medicion1
-        holder.medicion2View.text = medicion.medicion2
-        holder.itemView.setOnClickListener { onItemSelected(medicion) }
-        holder.deleteButton.setOnClickListener { onDeleteClick(medicion) }
+        holder.bind(medicion)
     }
 
-    override fun getItemCount() = mediciones.size
+    override fun getItemCount(): Int {
+        return mediciones.size
+    }
 
     // Método para actualizar las mediciones y notificar al RecyclerView
     fun actualizarMediciones(nuevasMediciones: List<Medicion>) {
-        this.mediciones = nuevasMediciones
+        mediciones = nuevasMediciones
         notifyDataSetChanged()  // Notificar cambios para que el RecyclerView se actualice
     }
 }

@@ -9,4 +9,6 @@
     <item name="deleteButton" type="id" />
     <item name="editMedicion1" type="id" />
     <item name="editMedicion2" type="id" />
+    <item name="medicion1TextView" type="id" />
+    <item name="medicion2TextView" type="id" />
 </resources>

@@ -11,7 +11,6 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.pft.fragments.FragmentoMediciones
 import com.example.pft.R
-import com.example.pft.fragments.FragmentoEntradaMediciones
 import com.google.android.material.navigation.NavigationView
 
 class NavActivity : AppCompatActivity() {
@@ -38,25 +37,14 @@ class NavActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Clickeaste Inicio", Toast.LENGTH_SHORT).show()
                     // Cargar un fragmento
                 }
-                R.id.add_mediciones -> {
+                R.id.mediciones -> {
                     val fragment = FragmentoMediciones()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .addToBackStack(null)
                         .commit()
                 }
-
-                R.id.list_mediciones -> {
-                    val fragment = FragmentoEntradaMediciones()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, fragment)
-                        .addToBackStack(null)
-                        .commit()
-                }
-
                 R.id.manual -> {
-                    val intent = Intent(this, AbrirManual::class.java)
-                    startActivity(intent)
                     Toast.makeText(applicationContext, "Clickeaste Manual", Toast.LENGTH_SHORT).show()
                     // Cargar un fragmento
                 }
@@ -84,7 +72,6 @@ class NavActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    /*Cerrar sesion*/
     private fun mostrarMensajeLogout() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Cerrar Sesión")
