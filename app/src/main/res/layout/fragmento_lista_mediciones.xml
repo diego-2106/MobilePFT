@@ -3,45 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".fragments.FragmentoListaMediciones">
 
-    <!-- Encabezados de la tabla -->
-    <LinearLayout
+    <!-- Título de la sección -->
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="Listado de Mediciones"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"/>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Medición 1"
-            android:gravity="center"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Medición 2"
-            android:gravity="center"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Acción"
-            android:gravity="center"/>
-
-        <!-- Agregar más TextViews si hay más columnas -->
-    </LinearLayout>
-
+    <!-- RecyclerView para la lista de mediciones -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/medicionesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         tools:listitem="@layout/item_medicion" />
+
+    <!-- Botón para actualizar la lista de mediciones -->
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Actualizar"
+        android:layout_marginTop="16dp"/>
 
 </LinearLayout>
