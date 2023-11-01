@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.pft.fragments.FragmentoMediciones
 import com.example.pft.R
+import com.example.pft.fragments.FragmentoListaMediciones
 import com.google.android.material.navigation.NavigationView
 
 class NavActivity : AppCompatActivity() {
@@ -38,7 +39,18 @@ class NavActivity : AppCompatActivity() {
                     // Cargar un fragmento
                 }
                 R.id.mediciones -> {
+                    Toast.makeText(applicationContext, "Clickeaste Mediciones", Toast.LENGTH_SHORT).show()
+                    // Cargar un fragmento
                     val fragment = FragmentoMediciones()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
+                R.id.lista_mediciones -> {
+                    Toast.makeText(applicationContext, "Clickeaste Listado de Mediciones", Toast.LENGTH_SHORT).show()
+                    // Cargar un fragmento
+                    val fragment = FragmentoListaMediciones()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .addToBackStack(null)
@@ -47,6 +59,8 @@ class NavActivity : AppCompatActivity() {
                 R.id.manual -> {
                     Toast.makeText(applicationContext, "Clickeaste Manual", Toast.LENGTH_SHORT).show()
                     // Cargar un fragmento
+                    val intent = Intent(this, AbrirManual::class.java)
+                    startActivity(intent)
                 }
                 R.id.settings -> {
                     Toast.makeText(applicationContext, "Clickeaste Ajustes", Toast.LENGTH_SHORT).show()
