@@ -9,9 +9,14 @@
                 android:icon="@drawable/ic_baseline_home_24"/>
 
             <item
-                android:id="@+id/mediciones"
-                android:title="Mediciones"
+                android:id="@+id/add_mediciones"
+                android:title="Agregar Mediciones"
                 android:icon="@drawable/ic_baseline_air_24" />
+
+            <item
+                android:id="@+id/list_mediciones"
+                android:title="Listar Mediciones"
+                android:icon="@drawable/ic_baseline_format_list_bulleted_24" />
 
             <item
                 android:id="@+id/manual"

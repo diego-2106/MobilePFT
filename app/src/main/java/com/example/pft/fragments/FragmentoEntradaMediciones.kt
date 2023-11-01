@@ -23,6 +23,7 @@ class FragmentoEntradaMediciones : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /**
         val medicion1EditText: EditText = view.findViewById(R.id.medicion1EditText)
         val medicion2EditText: EditText = view.findViewById(R.id.medicion2EditText)
         val saveButton: Button = view.findViewById(R.id.saveButton)
@@ -47,6 +48,6 @@ class FragmentoEntradaMediciones : Fragment() {
         if (medicion1.isNotEmpty() && medicion2.isNotEmpty()) {
             RepositorioMediciones.agregarMedicion(medicion1, medicion2)
             // Opcional: Navegar de regreso al FragmentoListaMediciones o actualizar la lista directamente si están en el mismo fragmento.
-        }
+        }*/
     }
 }
