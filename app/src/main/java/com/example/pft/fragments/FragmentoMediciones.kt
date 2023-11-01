@@ -114,7 +114,5 @@ class FragmentoMediciones : Fragment() {
                 dialog.cancel()
             }
             .show()
-
     }
-
 }
