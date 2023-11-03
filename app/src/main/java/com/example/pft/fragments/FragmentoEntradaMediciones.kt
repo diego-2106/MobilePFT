@@ -25,6 +25,8 @@ class FragmentoEntradaMediciones : Fragment() {
 
         val medicion1EditText: EditText = view.findViewById(R.id.medicion1EditText)
         val medicion2EditText: EditText = view.findViewById(R.id.medicion2EditText)
+        val medicion3EditText: EditText = view.findViewById(R.id.medicion3EditText)
+        val medicion4EditText: EditText = view.findViewById(R.id.medicion4EditText)
         val saveButton: Button = view.findViewById(R.id.saveButton)
 
         // Si recibiste una medicion como argumento, puedes mostrarla aquí.
@@ -33,18 +35,22 @@ class FragmentoEntradaMediciones : Fragment() {
         if (medicion != null) {
             medicion1EditText.setText(medicion.medicion1)
             medicion2EditText.setText(medicion.medicion2)
+            medicion3EditText.setText(medicion.medicion3)
+            medicion4EditText.setText(medicion.medicion4)
         }
         saveButton.setOnClickListener {
-            guardarMedicion(medicion1EditText, medicion2EditText)
+            guardarMedicion(medicion1EditText, medicion2EditText, medicion3EditText, medicion4EditText )
         }
     }
 
-    private fun guardarMedicion(medicion1EditText: EditText, medicion2EditText: EditText) {
+    private fun guardarMedicion(medicion1EditText: EditText, medicion2EditText: EditText, medicion3EditText: EditText, medicion4EditText: EditText) {
         val medicion1 = medicion1EditText.text.toString()
         val medicion2 = medicion2EditText.text.toString()
+        val medicion3 = medicion3EditText.text.toString()
+        val medicion4 = medicion4EditText.text.toString()
         if (medicion1.isNotEmpty() && medicion2.isNotEmpty()) {
             val id = RepositorioMediciones.generarId()  // Obtiene un nuevo ID
-            val nuevaMedicion = Medicion(id, medicion1, medicion2)
+            val nuevaMedicion = Medicion(id, medicion1, medicion2, medicion3, medicion4)
             RepositorioMediciones.agregarMedicion(nuevaMedicion)
         }
     }

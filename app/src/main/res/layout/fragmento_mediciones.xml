@@ -1,12 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#FFFFFF">
 
-    <EditText
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Ingresar datos de Medición"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#000000">
+
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <EditText
         android:id="@+id/medicion1EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +41,7 @@
         android:textColor="@color/black"
         android:fontFamily="sans-serif-condensed"
         android:padding="16dp"
+        android:layout_marginTop="15dp"
         android:textColorHint="#595858"
         android:hint="@string/medicion_1" />
 
@@ -27,24 +55,67 @@
         android:fontFamily="sans-serif-condensed"
         android:padding="16dp"
         android:textColorHint="#595858"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="15dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
+        <EditText
+            android:id="@+id/medicion3EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Medicion 3"
+            android:background="@drawable/bgedittextmediciones"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="16dp"
+            android:textColorHint="#595858"
+            android:layout_marginTop="15dp" />
+
+        <EditText
+            android:id="@+id/medicion4EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Medicion 4"
+            android:background="@drawable/bgedittextmediciones"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="16dp"
+            android:textColorHint="#595858"
+            android:layout_marginTop="15dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/saveButton"
         style="@android:style/Widget.Button"
-        android:layout_width="177dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="43dp"
         android:background="@drawable/login_btn_background"
         android:fontFamily="sans-serif-condensed"
-        android:text="Guardar"
-        android:textSize="18sp" />
+        android:text="Ingresar"
+        android:textSize="25sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/medicionesRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="16dp" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancelButton"
+            style="@android:style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_edit_or_cancelbtn"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Cancelar"
+            android:textSize="25sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"/>
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/medicionesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

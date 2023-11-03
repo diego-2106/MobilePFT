@@ -50,7 +50,8 @@ class FragmentoListaMediciones : Fragment() {
     private fun mostrarDetallesMedicion(medicion: Medicion) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Detalles de la Medición")
-        builder.setMessage("Medición 1: ${medicion.medicion1}\nMedición 2: ${medicion.medicion2}")
+        builder.setIcon(R.drawable.ic_baseline_info_24)
+        builder.setMessage("Medición 1: ${medicion.medicion1}\nMedición 2: ${medicion.medicion2}\nMedicion 3: ${medicion.medicion3}\nMedicion 4: ${medicion.medicion4}")
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
         }
