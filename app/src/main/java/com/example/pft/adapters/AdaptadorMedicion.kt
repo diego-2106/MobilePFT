@@ -1,7 +1,5 @@
 package com.example.pft.adapters
 
-import ActualizarMedicionDialogFragment
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pft.R
+import com.example.pft.fragments.FragmentoMediciones
 import com.example.pft.models.Medicion
 
 class AdaptadorMedicion(
@@ -30,13 +29,15 @@ class AdaptadorMedicion(
             medicion2TextView.text = medicion.medicion2
 
             updateButton.setOnClickListener {
-                val dialog = ActualizarMedicionDialogFragment()
-                // Pasar 'medicion' actual al DialogFragment como Parcelable
-                dialog.arguments = Bundle().apply {
-                    putParcelable("medicion", medicion) //Medicion implementa Parcelable
+                // Aquí asumimos que el fragmento que tiene el método showEditDialog es el que está en uso actualmente
+                // y es una instancia de FragmentoMediciones
+                val fragmentActivity = itemView.context as? FragmentActivity
+                val fragment = fragmentActivity?.supportFragmentManager?.findFragmentById(R.id.fragmento_mediciones_container)
+                if (fragment is FragmentoMediciones) {
+                    fragment.showEditDialog(medicion)
+                } else {
+                    onUpdateClick(medicion) // Llama a la función pasada al constructor
                 }
-                dialog.show((itemView.context as FragmentActivity).supportFragmentManager, "ActualizarMedicion")
-                onUpdateClick(medicion)
             }
 
             deleteButton.setOnClickListener {

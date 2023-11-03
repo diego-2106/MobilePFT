@@ -13,4 +13,5 @@
     <item name="editMedicion4" type="id" />
     <item name="medicion1TextView" type="id" />
     <item name="medicion2TextView" type="id" />
+    <item name="fragmento_mediciones_container" type="id" />
 </resources>

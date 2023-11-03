@@ -29,8 +29,6 @@ class FragmentoEntradaMediciones : Fragment() {
         val medicion4EditText: EditText = view.findViewById(R.id.medicion4EditText)
         val saveButton: Button = view.findViewById(R.id.saveButton)
 
-        // Si recibiste una medicion como argumento, puedes mostrarla aquí.
-        // Asegúrate de que Medicion implemente Parcelable.
         val medicion: Medicion? = arguments?.getParcelable<Medicion>("medicion")
         if (medicion != null) {
             medicion1EditText.setText(medicion.medicion1)

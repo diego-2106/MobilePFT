@@ -1,5 +1,6 @@
 package com.example.pft.fragments
 
+import ActualizarMedicionDialogFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pft.R
 import com.example.pft.adapters.AdaptadorMedicion
 import com.example.pft.data.RepositorioMediciones
-import com.example.pft.data.RepositorioMediciones.actualizarMedicion
 import com.example.pft.models.Medicion
 
 class FragmentoListaMediciones : Fragment() {
@@ -34,7 +34,7 @@ class FragmentoListaMediciones : Fragment() {
         adaptadorMedicion = AdaptadorMedicion(
             emptyList(),
             onDeleteClick = ::eliminarMedicion,
-            onUpdateClick = ::actualizarMedicion,
+            onUpdateClick = ::actualizarMedicionDialog,
             onItemSelected = ::mostrarDetallesMedicion
         )
 
@@ -59,8 +59,13 @@ class FragmentoListaMediciones : Fragment() {
     }
 
     private fun actualizarMediciones() {
-        val mediciones = RepositorioMediciones.obtenerMediciones()
-        adaptadorMedicion.actualizarMediciones(mediciones)
+        adaptadorMedicion.actualizarMediciones(RepositorioMediciones.obtenerMediciones())
+    }
+
+    private fun actualizarMedicionDialog(medicion: Medicion) {
+        ActualizarMedicionDialogFragment().apply {
+            arguments = Bundle().apply { putInt("ID_MEDICION", medicion.id) }
+        }.show(parentFragmentManager, "actualizarMedicionDialog")
     }
 
     override fun onResume() {

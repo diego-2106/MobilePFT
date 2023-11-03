@@ -1,5 +1,6 @@
 package com.example.pft.fragments
 
+import ActualizarMedicionDialogFragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.example.pft.adapters.AdaptadorMedicion
 import com.example.pft.models.Medicion
 import android.app.AlertDialog
 import com.example.pft.data.RepositorioMediciones
+
 
 class FragmentoMediciones : Fragment() {
 
@@ -38,21 +40,42 @@ class FragmentoMediciones : Fragment() {
         val medicionesRecyclerView: RecyclerView = view.findViewById(R.id.medicionesRecyclerView)
 
         adaptadorMedicion = AdaptadorMedicion(
-            mediciones,
-            // ... código para manejar el borrado ...
+            mediciones = listOf(), // Puedes pasar una lista inicial de mediciones o empezar con una lista vacía
             onDeleteClick = { medicion ->
-                mediciones.remove(medicion)
-                adaptadorMedicion.notifyDataSetChanged()
+                // Aquí implementarías la lógica para eliminar una medición.
+                AlertDialog.Builder(requireContext()).apply {
+                    setTitle("Eliminar Medición")
+                    setMessage("¿Estás seguro de que deseas eliminar esta medición?")
+                    setPositiveButton("Eliminar") { dialog, which ->
+                        RepositorioMediciones.eliminarMedicion(medicion)
+                        actualizarMediciones() // Actualizar la lista después de la eliminación
+                    }
+                    setNegativeButton("Cancelar", null)
+                }.create().show()
             },
             onUpdateClick = { medicion ->
-                // Aquí, implementa lo que debe suceder cuando se hace clic en actualizar
-                showEditDialog(medicion)
+                // Aquí implementarías la lógica para actualizar/editar una medición.
+                // Por ejemplo, puedes iniciar un diálogo o actividad que te permite editar la medición.
+                val editDialog = ActualizarMedicionDialogFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable("medicion", medicion)
+                    }
+                }
+                editDialog.show(childFragmentManager, "editMedicion")
             },
-            // ... código para manejar la selección de un elemento ...
             onItemSelected = { medicion ->
-                showEditDialog(medicion)
+                // Aquí implementarías la lógica para manejar la selección de una medición.
+                // Esto podría ser mostrar detalles, abrir un nuevo fragmento, etc.
+                val detailsDialog = ActualizarMedicionDialogFragment().apply {
+                    arguments = Bundle().apply {
+                        putParcelable("medicion", medicion)
+                    }
+                }
+                detailsDialog.show(childFragmentManager, "detallesMedicion")
             }
         )
+
+
 
         medicionesRecyclerView.adapter = adaptadorMedicion
 
@@ -80,7 +103,20 @@ class FragmentoMediciones : Fragment() {
         }
     }
 
-    private fun showEditDialog(medicion: Medicion) {
+    private fun actualizarMediciones() {
+        // Suponiendo que tienes una función en RepositorioMediciones que te devuelve la lista actualizada de mediciones
+        val nuevasMediciones = RepositorioMediciones.obtenerMediciones()
+
+        // Actualizar la lista de mediciones con los nuevos datos
+        mediciones.clear()
+        mediciones.addAll(nuevasMediciones)
+
+        // Notificar al adaptador que los datos han cambiado para que actualice la vista
+        adaptadorMedicion.notifyDataSetChanged()
+    }
+
+
+    fun showEditDialog(medicion: Medicion) {
         val dialogLayout = layoutInflater.inflate(R.layout.dialog_edit_medicion, null)
         val editMedicion1 = dialogLayout.findViewById<EditText>(R.id.editMedicion1)
         val editMedicion2 = dialogLayout.findViewById<EditText>(R.id.editMedicion2)
