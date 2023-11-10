@@ -1,20 +1,20 @@
 package com.example.pft.fragments
 
-import ActualizarMedicionDialogFragment
+import AdaptadorMedicion
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pft.R
-import com.example.pft.adapters.AdaptadorMedicion
 import com.example.pft.models.Medicion
 import android.app.AlertDialog
 import com.example.pft.data.RepositorioMediciones
-
+import com.example.pft.listeners.MedicionInteractionListener
 
 class FragmentoMediciones : Fragment() {
 
@@ -38,130 +38,125 @@ class FragmentoMediciones : Fragment() {
         val medicion4EditText: EditText = view.findViewById(R.id.medicion4EditText)
         val saveButton: Button = view.findViewById(R.id.saveButton)
         val medicionesRecyclerView: RecyclerView = view.findViewById(R.id.medicionesRecyclerView)
+        medicionesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         adaptadorMedicion = AdaptadorMedicion(
-            mediciones = listOf(), // Puedes pasar una lista inicial de mediciones o empezar con una lista vacía
-            onDeleteClick = { medicion ->
-                // Aquí implementarías la lógica para eliminar una medición.
-                AlertDialog.Builder(requireContext()).apply {
-                    setTitle("Eliminar Medición")
-                    setMessage("¿Estás seguro de que deseas eliminar esta medición?")
-                    setPositiveButton("Eliminar") { dialog, which ->
-                        RepositorioMediciones.eliminarMedicion(medicion)
-                        actualizarMediciones() // Actualizar la lista después de la eliminación
-                    }
-                    setNegativeButton("Cancelar", null)
-                }.create().show()
-            },
-            onUpdateClick = { medicion ->
-                // Aquí implementarías la lógica para actualizar/editar una medición.
-                // Por ejemplo, puedes iniciar un diálogo o actividad que te permite editar la medición.
-                val editDialog = ActualizarMedicionDialogFragment().apply {
-                    arguments = Bundle().apply {
-                        putParcelable("medicion", medicion)
-                    }
+            mediciones,
+            object : MedicionInteractionListener {
+                override fun onDelete(medicion: Medicion) {
+                    mostrarDialogoEliminar(medicion)
                 }
-                editDialog.show(childFragmentManager, "editMedicion")
-            },
-            onItemSelected = { medicion ->
-                // Aquí implementarías la lógica para manejar la selección de una medición.
-                // Esto podría ser mostrar detalles, abrir un nuevo fragmento, etc.
-                val detailsDialog = ActualizarMedicionDialogFragment().apply {
-                    arguments = Bundle().apply {
-                        putParcelable("medicion", medicion)
-                    }
+
+                override fun onUpdate(medicion: Medicion) {
+                    mostrarDialogoActualizar(medicion)
                 }
-                detailsDialog.show(childFragmentManager, "detallesMedicion")
+
+                override fun onItemSelected(medicion: Medicion) {
+                    mostrarDetallesMedicion(medicion)
+                }
             }
         )
-
-
-
         medicionesRecyclerView.adapter = adaptadorMedicion
 
         saveButton.setOnClickListener {
-            val medicion1 = medicion1EditText.text.toString()
-            val medicion2 = medicion2EditText.text.toString()
-            val medicion3 = medicion3EditText.text.toString()
-            val medicion4 = medicion4EditText.text.toString()
-            if (medicion1.isNotEmpty() && medicion2.isNotEmpty()) {
-                val medicion = Medicion(nextId++, medicion1, medicion2, medicion3, medicion4)
-                RepositorioMediciones.agregarMedicion(medicion)
-                mediciones.add(medicion) // Agrega la nueva medición a la lista local
-                adaptadorMedicion.notifyItemInserted(mediciones.size - 1) // Notificar al adaptador sobre la nueva medición
-            } else {
-                // muestra mensaje de error en caso de que los campos estén vacíos
-                AlertDialog.Builder(requireContext())
-                    .setTitle("Atención!")
-                    .setMessage("Ambos campos deben estar llenos")
-                    .setIcon(R.drawable.ic_baseline_warning_24)
-                    .setPositiveButton("Ok") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
-            }
+            guardarMedicion(
+                medicion1EditText.text.toString(),
+                medicion2EditText.text.toString(),
+                medicion3EditText.text.toString(),
+                medicion4EditText.text.toString()
+            )
         }
     }
 
-    private fun actualizarMediciones() {
-        // Suponiendo que tienes una función en RepositorioMediciones que te devuelve la lista actualizada de mediciones
-        val nuevasMediciones = RepositorioMediciones.obtenerMediciones()
-
-        // Actualizar la lista de mediciones con los nuevos datos
-        mediciones.clear()
-        mediciones.addAll(nuevasMediciones)
-
-        // Notificar al adaptador que los datos han cambiado para que actualice la vista
-        adaptadorMedicion.notifyDataSetChanged()
+    private fun guardarMedicion(medicion1: String, medicion2: String, medicion3: String, medicion4: String) {
+        if (medicion1.isNotEmpty() && medicion2.isNotEmpty()) {
+            val nuevaMedicion = Medicion(nextId++, medicion1, medicion2, medicion3, medicion4)
+            RepositorioMediciones.agregarMedicion(nuevaMedicion)
+            mediciones.add(nuevaMedicion)
+            adaptadorMedicion.notifyItemInserted(mediciones.size - 1)
+        } else {
+            mostrarMensajeError()
+        }
     }
 
-
-    fun showEditDialog(medicion: Medicion) {
-        val dialogLayout = layoutInflater.inflate(R.layout.dialog_edit_medicion, null)
-        val editMedicion1 = dialogLayout.findViewById<EditText>(R.id.editMedicion1)
-        val editMedicion2 = dialogLayout.findViewById<EditText>(R.id.editMedicion2)
-        val editMedicion3 = dialogLayout.findViewById<EditText>(R.id.editMedicion3)
-        val editMedicion4 = dialogLayout.findViewById<EditText>(R.id.editMedicion4)
-
-        // Configurar los EditText con los valores actuales de la medicion
-        editMedicion1.setText(medicion.medicion1)
-        editMedicion2.setText(medicion.medicion2)
-        editMedicion3.setText(medicion.medicion3)
-        editMedicion4.setText(medicion.medicion4)
-
-
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setView(dialogLayout)
-            .setPositiveButton("Guardar") { dialog, _ ->
-                val newMedicion1 = editMedicion1.text?.toString()
-                val newMedicion2 = editMedicion2.text?.toString()
-                val newMedicion3 = editMedicion3.text?.toString()
-                val newMedicion4 = editMedicion4.text?.toString()
-                if (newMedicion1?.isNotEmpty() == true && newMedicion2?.isNotEmpty() == true && newMedicion3?.isNotEmpty() == true && newMedicion4?.isNotEmpty() == true) {
-                    medicion.medicion1 = newMedicion1
-                    medicion.medicion2 = newMedicion2
-                    medicion.medicion3 = newMedicion3
-                    medicion.medicion4 = newMedicion4
-                    // Aquí asumo que necesitas actualizar la lista y luego notificar al adaptador
-                    val index = mediciones.indexOf(medicion)
-                    if (index != -1) {
-                        mediciones[index] = medicion
-                        adaptadorMedicion.notifyItemChanged(index)
-                    }
-
-                }
-                dialog.dismiss()
+    private fun mostrarDialogoEliminar(medicion: Medicion) {
+        AlertDialog.Builder(requireContext()).apply {
+            setTitle("Eliminar Medición")
+            setMessage("¿Estás seguro de que deseas eliminar esta medición?")
+            setPositiveButton("Eliminar") { _, _ ->
+                eliminarMedicion(medicion)
             }
-            .setNegativeButton("Eliminar") { dialog, _ ->
-                val index = mediciones.indexOf(medicion)
-                if (index != -1) {
-                    mediciones.removeAt(index)
-                    adaptadorMedicion.notifyItemRemoved(index)
-                }
-                dialog.dismiss()
+            setNegativeButton("Cancelar", null)
+        }.create().show()
+    }
+
+    private fun eliminarMedicion(medicion: Medicion) {
+        val index = mediciones.indexOf(medicion)
+        if (index != -1) {
+            RepositorioMediciones.eliminarMedicion(medicion)
+            mediciones.removeAt(index)
+            adaptadorMedicion.notifyItemRemoved(index)
+        }
+    }
+
+    private fun mostrarDialogoActualizar(medicion: Medicion) {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_medicion, null)
+        val editMedicion1EditText: EditText = dialogView.findViewById(R.id.editMedicion1)
+        val editMedicion2EditText: EditText = dialogView.findViewById(R.id.editMedicion2)
+
+        editMedicion1EditText.setText(medicion.medicion1)
+        editMedicion2EditText.setText(medicion.medicion2)
+
+        AlertDialog.Builder(requireContext()).apply {
+            setTitle("Actualizar Medición")
+            setView(dialogView)
+            setPositiveButton("Guardar") { dialog, _ ->
+                // Aquí se recogen los datos editados y se actualiza la medición
+                val nuevaMedicion1 = editMedicion1EditText.text.toString()
+                val nuevaMedicion2 = editMedicion2EditText.text.toString()
+                // Recoge los datos para medicion3 y medicion4
+
+                //verifica que los datos son válidos antes de continuar
+                medicion.medicion1 = nuevaMedicion1
+                medicion.medicion2 = nuevaMedicion2
+                // Actualiza medicion3 y medicion4
+
+                RepositorioMediciones.actualizarMedicion(medicion)
+                actualizarMediciones()
             }
-            .setNeutralButton("Cancelar") { dialog, _ ->
-                dialog.cancel()
-            }
+            setNegativeButton("Cancelar", null)
+        }.show()
+    }
+
+    private fun mostrarDetallesMedicion(medicion: Medicion?) {
+        val mensaje = if (medicion != null) {
+            "Detalles de la medición:\n" +
+                    "Medición 1: ${medicion.medicion1}\n" +
+                    "Medición 2: ${medicion.medicion2}\n"
+        } else {
+            "La información de la medición no está disponible."
+        }
+
+        AlertDialog.Builder(requireContext()).apply {
+            setTitle("Detalles de la Medición")
+            setMessage(mensaje)
+            setPositiveButton("Cerrar", null)
+        }.show()
+    }
+
+    private fun mostrarMensajeError() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Atención!")
+            .setMessage("Ambos campos deben estar llenos")
+            .setIcon(R.drawable.ic_baseline_warning_24)
+            .setPositiveButton("Ok", null)
+            .show()
+    }
+
+    private fun actualizarMediciones() {
+        val nuevasMediciones = RepositorioMediciones.obtenerMediciones()
+        mediciones.clear()
+        mediciones.addAll(nuevasMediciones)
+        adaptadorMedicion.notifyDataSetChanged()
     }
 }

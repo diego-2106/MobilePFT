@@ -17,11 +17,10 @@
         android:id="@+id/fragmentoEntradaMediciones"
         android:name="com.example.pft.fragments.FragmentoEntradaMediciones"
         tools:layout="@layout/fragmento_entrada_mediciones">
-        <argument
-            android:name="medicionJson"
-            app:argType="string"
-            android:defaultValue="@null"
-            app:nullable="true" />
+        <action
+            android:id="@+id/action_fragmentoEntradaMediciones_to_fragmentoListaMediciones"
+            app:destination="@id/fragmentoListaMediciones" />
     </fragment>
+
 
 </navigation>
