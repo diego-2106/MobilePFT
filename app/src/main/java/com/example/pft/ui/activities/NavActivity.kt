@@ -13,6 +13,7 @@ import com.example.pft.ui.fragments.FragmentoMediciones
 import com.example.pft.R
 import com.example.pft.ui.fragments.FragmentoAjustes
 import com.example.pft.ui.fragments.FragmentoListaMediciones
+import com.example.pft.ui.fragments.FragmentoVersion
 import com.google.android.material.navigation.NavigationView
 
 class NavActivity : AppCompatActivity() {
@@ -74,7 +75,11 @@ class NavActivity : AppCompatActivity() {
                 }
                 R.id.version -> {
                     Toast.makeText(applicationContext, "Clickeaste Version", Toast.LENGTH_SHORT).show()
-                    // Cargar un fragmento
+                    val fragment = FragmentoVersion()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, fragment)
+                        .addToBackStack(null)
+                        .commit()
                 }
                 R.id.logout -> {
                     mostrarMensajeLogout()
