@@ -1,4 +1,5 @@
-// Importaciones necesarias
+package com.example.pft.ui.fragments
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.pft.R
 import com.example.pft.models.Medicion
-import com.example.pft.viewModels.MedicionViewModel
+import com.example.pft.viewmodel.MedicionViewModel
 
 class FragmentoEntradaMediciones : Fragment() {
 

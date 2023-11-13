@@ -1,3 +1,5 @@
+package com.example.pft.ui.fragments
+
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog

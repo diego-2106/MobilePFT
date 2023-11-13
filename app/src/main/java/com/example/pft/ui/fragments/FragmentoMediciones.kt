@@ -1,4 +1,4 @@
-package com.example.pft.fragments
+package com.example.pft.ui.fragments
 
 import AdaptadorMedicion
 import android.os.Bundle

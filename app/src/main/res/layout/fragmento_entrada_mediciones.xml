@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="#DCDCDC"
-    tools:context=".fragments.FragmentoEntradaMediciones">
+    tools:context=".ui.fragments.FragmentoEntradaMediciones">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -136,8 +136,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.473"
                 app:layout_constraintStart_toStartOf="parent" />
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

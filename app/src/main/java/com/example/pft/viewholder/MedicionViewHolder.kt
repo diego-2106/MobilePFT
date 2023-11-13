@@ -1,4 +1,4 @@
-package com.example.pft.viewsHolders
+package com.example.pft.viewholder
 
 import android.view.View
 import android.widget.Button

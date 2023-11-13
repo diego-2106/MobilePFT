@@ -1,4 +1,4 @@
-package com.example.pft.views
+package com.example.pft.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,9 +9,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.example.pft.fragments.FragmentoMediciones
+import com.example.pft.ui.fragments.FragmentoMediciones
 import com.example.pft.R
-import com.example.pft.fragments.FragmentoListaMediciones
+import com.example.pft.ui.fragments.FragmentoListaMediciones
 import com.google.android.material.navigation.NavigationView
 
 class NavActivity : AppCompatActivity() {

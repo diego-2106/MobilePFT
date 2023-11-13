@@ -1,4 +1,4 @@
-package com.example.pft.views
+package com.example.pft.ui.activities
 
 import android.os.Bundle
 import android.os.Handler

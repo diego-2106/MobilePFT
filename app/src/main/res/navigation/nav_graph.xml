@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragmentoListaMediciones"
-        android:name="com.example.pft.fragments.FragmentoListaMediciones"
+        android:name="com.example.pft.ui.fragments.FragmentoListaMediciones"
         tools:layout="@layout/fragmento_lista_mediciones" >
         <action
             android:id="@+id/action_to_fragmentoEntradaMediciones"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/fragmentoEntradaMediciones"
-        android:name="com.example.pft.fragments.FragmentoEntradaMediciones"
+        android:name="com.example.pft.ui.fragments.FragmentoEntradaMediciones"
         tools:layout="@layout/fragmento_entrada_mediciones">
         <action
             android:id="@+id/action_fragmentoEntradaMediciones_to_fragmentoListaMediciones"

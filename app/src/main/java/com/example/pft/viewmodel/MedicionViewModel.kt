@@ -1,4 +1,4 @@
-package com.example.pft.viewModels
+package com.example.pft.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

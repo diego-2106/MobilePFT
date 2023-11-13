@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pft.R
 import com.example.pft.listeners.MedicionInteractionListener
 import com.example.pft.models.Medicion
-import com.example.pft.viewsHolders.MedicionViewHolder
+import com.example.pft.viewholder.MedicionViewHolder
 
 class AdaptadorMedicion(
     private var mediciones: List<Medicion>,
