@@ -8,4 +8,6 @@
     <string name="medicion_2">Medición 2</string>
     <string name="guardar">Guardar</string>
     <string name="cancelar" />
+    <string name="ajustes_modo_oscuro">Modo Oscuro</string>
+    <string name="pref_modo_oscuro">modo_oscuro</string>
 </resources>
