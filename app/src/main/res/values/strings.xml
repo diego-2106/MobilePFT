@@ -10,6 +10,6 @@
     <string name="cancelar" />
     <string name="ajustes_modo_oscuro">Modo Oscuro</string>
     <string name="pref_modo_oscuro">modo_oscuro</string>
-    <string name="version_format">Versión: %1$s 1.0.1, desarrollado por Synergia</string>
+    <string name="version_format">Versión 1.0.1</string>
 
 </resources>
