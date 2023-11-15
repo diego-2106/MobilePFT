@@ -19,12 +19,6 @@
         android:title="Lista de Mediciones" />
 
 
-    <item
-        android:id="@+id/manual"
-        android:icon="@drawable/ic_file_open_24"
-        android:title="Manual de Usuario" />
-
-
     <item android:title="Aplicación">
 
         <menu>
@@ -37,11 +31,24 @@
             <item
                 android:id="@+id/version"
                 android:icon="@drawable/ic_baseline_security_update_good_24"
-                android:title="Version" />
+                android:title="Versión" />
 
         </menu>
 
     </item>
+
+    <item android:title="Ayudas">
+
+        <menu>
+
+            <item
+                android:id="@+id/manual"
+                android:icon="@drawable/ic_file_open_24"
+                android:title="Manual de Usuario" />
+        </menu>
+
+    </item>
+
 
     <item android:title="Salir">
 
@@ -54,6 +61,5 @@
 
         </menu>
     </item>
-
 
 </menu>
