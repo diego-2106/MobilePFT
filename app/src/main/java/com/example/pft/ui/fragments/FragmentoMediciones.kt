@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pft.R
 import com.example.pft.models.Medicion
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.widget.DatePicker
 import com.example.pft.data.RepositorioMediciones
 import com.example.pft.listeners.MedicionInteractionListener
+import java.util.Calendar
 
 class FragmentoMediciones : Fragment() {
 
@@ -28,6 +31,7 @@ class FragmentoMediciones : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragmento_mediciones, container, false)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,13 +71,22 @@ class FragmentoMediciones : Fragment() {
             )
         }
     }
-
     private fun guardarMedicion(medicion1: String, medicion2: String, medicion3: String, medicion4: String) {
         if (medicion1.isNotEmpty() && medicion2.isNotEmpty()) {
-            val nuevaMedicion = Medicion(nextId++, medicion1, medicion2, medicion3, medicion4)
-            RepositorioMediciones.agregarMedicion(nuevaMedicion)
-            mediciones.add(nuevaMedicion)
-            adaptadorMedicion.notifyItemInserted(mediciones.size - 1)
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Guardar Medición")
+            builder.setIcon(R.drawable.baseline_check_circle_outline_24)
+            builder.setMessage("¿Estás seguro de que deseas guardar esta medición?")
+            builder.setPositiveButton("Guardar") { dialog, _ ->
+                // Código para guardar la medición
+                val nuevaMedicion = Medicion(nextId++, medicion1, medicion2, medicion3, medicion4)
+                RepositorioMediciones.agregarMedicion(nuevaMedicion)
+                mediciones.add(nuevaMedicion)
+                adaptadorMedicion.notifyItemInserted(mediciones.size - 1)
+            }
+            builder.setNegativeButton("Cancelar", null)
+
+            builder.show()
         } else {
             mostrarMensajeError()
         }

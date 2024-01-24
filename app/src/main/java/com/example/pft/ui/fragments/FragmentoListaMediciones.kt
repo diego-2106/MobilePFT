@@ -36,9 +36,11 @@ class FragmentoListaMediciones : Fragment(), MedicionInteractionListener {
         // Implementa la lógica para eliminar una medición
         AlertDialog.Builder(requireContext()).apply {
             setTitle("Eliminar Medición")
+            setIcon(R.drawable.ic_baseline_warning_24)
             setMessage("¿Estás seguro de que deseas eliminar esta medición?")
             setPositiveButton("Eliminar") { dialog, _ ->
                 RepositorioMediciones.eliminarMedicion(medicion)
+                adaptadorMedicion.notifyDataSetChanged()
             }
             setNegativeButton("Cancelar", null)
         }.show()

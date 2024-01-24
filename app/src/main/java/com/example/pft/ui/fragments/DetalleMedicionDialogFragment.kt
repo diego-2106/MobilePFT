@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.example.pft.R
 import com.example.pft.models.Medicion
 
 class DetalleMedicionDialogFragment : DialogFragment() {
@@ -24,16 +25,17 @@ class DetalleMedicionDialogFragment : DialogFragment() {
 
         val mensaje = medicion?.let {
             "Detalles de la medición:\n" +
-                    "Medición 1: ${it.medicion1}\n" +
-                    "Medición 2: ${it.medicion2}\n" +
-                    "Medición 3: ${it.medicion3}\n" +
-                    "Medición 4: ${it.medicion4}"
+                    "Usuario Creador: ${it.medicion1}\n" +
+                    "Fecha: ${it.medicion2}\n" +
+                    "Formulario: ${it.medicion3}\n" +
+                    "Descripción: ${it.medicion4}"
         } ?: "La información de la medición no está disponible."
 
         return AlertDialog.Builder(requireActivity()).apply {
             setTitle("Detalles de la Medición")
             setMessage(mensaje)
-            setPositiveButton("Cerrar", null)
+            setIcon(R.drawable.baseline_check_circle_outline_24)
+            setNegativeButton("Cerrar", null)
         }.create()
     }
 }
