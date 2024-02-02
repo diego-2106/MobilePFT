@@ -3,6 +3,8 @@ package com.example.pft.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -11,6 +13,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.pft.ui.fragments.FragmentoMediciones
 import com.example.pft.R
+import com.example.pft.models.UsuarioDTO
 import com.example.pft.ui.fragments.FragmentoAjustes
 import com.example.pft.ui.fragments.FragmentoListaMediciones
 import com.example.pft.ui.fragments.FragmentoVersion
@@ -33,6 +36,22 @@ class NavActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+
+        // Obtener el objeto UsuarioDTO del Intent
+        val usuario = intent.getSerializableExtra("usuarios") as? UsuarioDTO
+
+        // Verificar si el usuario no es nulo y actualizar los TextViews en el HeaderView
+        if (usuario != null) {
+            val navigationView: NavigationView = findViewById(R.id.nav_view)
+            val headerView: View = navigationView.getHeaderView(0) // Obtén el primer HeaderView (puede haber más si usas múltiples menús deslizantes)
+
+            // Actualizar el TextView del nombre del usuario (user_name)
+            val userNameTextView: TextView = headerView.findViewById(R.id.user_name)
+            userNameTextView.text = "Usuario: ${usuario.nombre} ${usuario.apellido}"
+
+        }
+
 
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
