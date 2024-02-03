@@ -4,8 +4,8 @@
     <string name="close">Cerrar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="medicion_1">Usuario Creador</string>
-    <string name="medicion_2">Fecha</string>
+    <string name="medicion_1">Departamento</string>
+    <string name="medicion_2">Valor</string>
     <string name="guardar">Guardar</string>
     <string name="cancelar" />
     <string name="ajustes_modo_oscuro">Modo Oscuro</string>

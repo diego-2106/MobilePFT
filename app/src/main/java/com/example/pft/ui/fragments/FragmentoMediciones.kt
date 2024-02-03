@@ -13,17 +13,32 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pft.R
 import com.example.pft.models.Medicion
 import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.widget.DatePicker
+import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import com.example.pft.data.RepositorioMediciones
 import com.example.pft.listeners.MedicionInteractionListener
-import java.util.Calendar
+import com.example.pft.models.DepartamentoDTO
+import com.example.pft.rest.RestAPI_Client
+import com.example.pft.rest.RestAPI_Interface
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class FragmentoMediciones : Fragment() {
 
     private lateinit var adaptadorMedicion: AdaptadorMedicion
     private val mediciones = mutableListOf<Medicion>()
     private var nextId = 1
+
+    private lateinit var spinnerDepartamento: Spinner
+    private val departamentos = mutableListOf<DepartamentoDTO>()
+    private lateinit var adapter: ArrayAdapter<DepartamentoDTO>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +51,16 @@ class FragmentoMediciones : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val medicion1EditText: EditText = view.findViewById(R.id.medicion1EditText)
+        obtenerListaDepartamentos()
+
+        val spinnerDepartamento: Spinner = view.findViewById(R.id.spinnerDepartamentos)
+        // Asumiendo que 'departamentos' es una lista de DepartamentoDTO que se actualiza en obtenerListaDepartamentos()
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, departamentos)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerDepartamento.adapter = adapter
+
+        val medicion1EditText: EditText = view.findViewById(R.id.medicionValor)
         val medicion2EditText: EditText = view.findViewById(R.id.medicion2EditText)
         val medicion3EditText: EditText = view.findViewById(R.id.medicion3EditText)
         val medicion4EditText: EditText = view.findViewById(R.id.medicion4EditText)
@@ -71,7 +95,13 @@ class FragmentoMediciones : Fragment() {
             )
         }
     }
-    private fun guardarMedicion(medicion1: String, medicion2: String, medicion3: String, medicion4: String) {
+
+    private fun guardarMedicion(
+        medicion1: String,
+        medicion2: String,
+        medicion3: String,
+        medicion4: String
+    ) {
         if (medicion1.isNotEmpty() && medicion2.isNotEmpty()) {
             val builder = AlertDialog.Builder(requireContext())
             builder.setTitle("Guardar Medición")
@@ -172,4 +202,54 @@ class FragmentoMediciones : Fragment() {
         mediciones.addAll(nuevasMediciones)
         adaptadorMedicion.notifyDataSetChanged()
     }
+
+
+    private fun obtenerListaDepartamentos() {
+        val api = RestAPI_Client.retrofitInstance.create(RestAPI_Interface::class.java)
+        val call = api.getDepartamentos()
+
+        call.enqueue(object : Callback<List<DepartamentoDTO>> {
+            override fun onResponse(
+                call: Call<List<DepartamentoDTO>>,
+                response: Response<List<DepartamentoDTO>>
+            ) {
+                if (response.isSuccessful) {
+                    // Actualizar la lista de departamentos
+                    departamentos.clear()
+                    departamentos.addAll(response.body() ?: emptyList())
+                    // Notificar al adaptador del Spinner sobre los cambios
+                    adapter.notifyDataSetChanged()
+                } else {
+                    // Manejar la respuesta no exitosa, si es necesario
+                    // Aquí puedes mostrar un mensaje de error o realizar otras acciones
+                }
+            }
+
+            override fun onFailure(call: Call<List<DepartamentoDTO>>, t: Throwable) {
+                // Manejar la falla en la solicitud, si es necesario
+                // Aquí puedes mostrar un mensaje de error o realizar otras acciones
+            }
+        })
+    }
+
+    private fun <T> Call<T>.enqueue(callback: Callback<T>) {
+        this.enqueue(object : Callback<T> {
+            override fun onResponse(call: Call<T>, response: Response<T>) {
+                callback.onResponse(call, response)
+            }
+
+            override fun onFailure(call: Call<T>, t: Throwable) {
+                callback.onFailure(call, t)
+            }
+        })
+    }
 }
+
+private fun <T> Call<T>.enqueue(callback: Callback<List<DepartamentoDTO>>) {
+
+}
+
+
+
+
+
