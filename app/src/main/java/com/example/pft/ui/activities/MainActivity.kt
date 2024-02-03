@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                         .putExtra("usuarios", usuarioLogin))
                 } else {
                     showToast("Error en el login. Código: ${response.code()}")
+                    showToast("Usuario o Contraseña incorrectos")
                 }
             }
 
