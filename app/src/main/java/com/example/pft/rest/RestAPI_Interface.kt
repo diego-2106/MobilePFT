@@ -1,6 +1,7 @@
 package com.example.pft.rest
 
 import com.example.pft.models.DepartamentoDTO
+import com.example.pft.models.LocalidadDTO
 import com.example.pft.models.LoginBody
 import com.example.pft.models.UsuarioDTO
 import retrofit2.Call
@@ -15,5 +16,8 @@ interface RestAPI_Interface {
 
     /*Departamento*/
     @GET("departamentos/listarDepartamentos")
-    fun getDepartamentos(): Call<DepartamentoDTO?>
+    fun getDepartamentos(): Call<List<DepartamentoDTO>>
+
+    @GET("departamentos/listarLocalidades")
+    fun getLocalidades(): Call<List<LocalidadDTO>>
 }

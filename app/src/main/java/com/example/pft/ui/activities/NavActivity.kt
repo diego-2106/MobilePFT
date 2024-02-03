@@ -54,7 +54,8 @@ class NavActivity : AppCompatActivity() {
 
             // Actualizar el TextView del nombre del usuario (user_name)
             val userNameTextView: TextView = headerView.findViewById(R.id.user_name)
-            userNameTextView.text = "Usuario: ${usuario.nombre} ${usuario.apellido}"
+            userNameTextView.text = "${usuario.nombre} ${usuario.apellido}    \n" +
+                    "${usuario.rol}"
 
         }
 

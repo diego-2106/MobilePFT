@@ -16,11 +16,12 @@
         android:id="@+id/user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:fontFamily="sans-serif-condensed"
         android:paddingTop="8dp"
         android:layout_marginStart="20dp"
-        android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textColor="#292929"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <View
