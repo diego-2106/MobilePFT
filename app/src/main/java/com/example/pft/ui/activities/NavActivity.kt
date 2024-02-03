@@ -38,6 +38,11 @@ class NavActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Verificar si debemos abrir el fragmento de inicio
+        if (intent.getStringExtra("FRAGMENT_NAME") == "Inicio") {
+            cargarFragmentoInicio()
+        }
+
 
         // Obtener el objeto UsuarioDTO del Intent
         val usuario = intent.getSerializableExtra("usuarios") as? UsuarioDTO
@@ -112,6 +117,15 @@ class NavActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+    }
+
+    private fun cargarFragmentoInicio() {
+        // Crear una instancia del FragmentoInicio
+        val fragmentoInicio = FragmentoInicio()
+        // Iniciar una transacción de fragmentos para agregar el FragmentoInicio al contenedor
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragmentoInicio) // Asegúrate de que R.id.contenedor es el ID de tu FrameLayout en NavActivity
+            .commit()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

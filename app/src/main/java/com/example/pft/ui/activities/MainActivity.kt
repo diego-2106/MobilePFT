@@ -60,10 +60,11 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<UsuarioDTO?>, response: Response<UsuarioDTO?>) {
                 if (response.isSuccessful) {
                     val usuarioLogin = response.body()
-                    showToast("Login exitoso")
+                    val intent = Intent(this@MainActivity, NavActivity::class.java)
+                    intent.putExtra("FRAGMENT_NAME", "Inicio") // Pasar un indicador para cargar el fragmento de inicio
+                    intent.putExtra("usuarios", usuarioLogin)
+                    startActivity(intent)
                     finish()
-                    startActivity(Intent(this@MainActivity, NavActivity::class.java)
-                        .putExtra("usuarios", usuarioLogin))
                 } else {
                     showToast("Error en el login. Código: ${response.code()}")
                 }
