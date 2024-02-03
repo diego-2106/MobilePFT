@@ -19,6 +19,7 @@ import android.widget.Spinner
 import com.example.pft.data.RepositorioMediciones
 import com.example.pft.listeners.MedicionInteractionListener
 import com.example.pft.models.DepartamentoDTO
+import com.example.pft.models.LocalidadDTO
 import com.example.pft.rest.RestAPI_Client
 import com.example.pft.rest.RestAPI_Interface
 import com.google.gson.Gson
@@ -37,8 +38,13 @@ class FragmentoMediciones : Fragment() {
     private var nextId = 1
 
     private lateinit var spinnerDepartamento: Spinner
-    private val departamentos = mutableListOf<DepartamentoDTO>()
+    private lateinit var spinnerLocalidades: Spinner
+
     private lateinit var adapter: ArrayAdapter<DepartamentoDTO>
+    private val departamentos = mutableListOf<DepartamentoDTO>()
+
+    private lateinit var adapterLocalidad: ArrayAdapter<LocalidadDTO>
+    private val localidades = mutableListOf<LocalidadDTO>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,14 +57,72 @@ class FragmentoMediciones : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        obtenerListaDepartamentos()
+        adapterLocalidad = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            localidades
+        )
 
-        val spinnerDepartamento: Spinner = view.findViewById(R.id.spinnerDepartamentos)
-        // Asumiendo que 'departamentos' es una lista de DepartamentoDTO que se actualiza en obtenerListaDepartamentos()
-        val adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, departamentos)
+        adapterLocalidad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        val spinnerLocalidades: Spinner = view.findViewById(R.id.spinnerLocalidades) // Corregir aquí
+        spinnerLocalidades.adapter = adapterLocalidad
+
+
+        //Departamentos Spinner
+        adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            departamentos
+        )
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerDepartamento.adapter = adapter
+        val spinnerDepartamentos: Spinner = view.findViewById(R.id.spinnerDepartamentos)
+        spinnerDepartamentos.adapter = adapter
+
+
+        val restApi = RestAPI_Client.retrofitInstance.create(RestAPI_Interface::class.java)
+        val call = restApi.getDepartamentos()
+
+        val restApiLocalidad = RestAPI_Client.retrofitInstance.create(RestAPI_Interface::class.java)
+        val call1 = restApiLocalidad.getLocalidades()
+
+
+        call.enqueue(object : Callback<List<DepartamentoDTO>> {
+            override fun onResponse(
+                call: Call<List<DepartamentoDTO>>,
+                response: Response<List<DepartamentoDTO>>
+            ) {
+                if (response.isSuccessful) {
+                    departamentos.clear()
+                    departamentos.addAll(response.body() as List<DepartamentoDTO>)
+                    adapter.notifyDataSetChanged()
+                }
+            }
+
+            override fun onFailure(call: Call<List<DepartamentoDTO>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+        call1.enqueue(object : Callback<List<LocalidadDTO>> {
+            override fun onResponse(
+                call: Call<List<LocalidadDTO>>,
+                response: Response<List<LocalidadDTO>>
+            ) {
+                if (response.isSuccessful) {
+                    localidades.clear()
+                    localidades.addAll(response.body() as List<LocalidadDTO>)
+                    adapterLocalidad.notifyDataSetChanged()
+                }
+            }
+
+            override fun onFailure(call: Call<List<LocalidadDTO>>, t: Throwable) {
+                // Manejar el fallo de manera adecuada
+            }
+        })
+
 
         val medicion1EditText: EditText = view.findViewById(R.id.medicionValor)
         val medicion2EditText: EditText = view.findViewById(R.id.medicion2EditText)
@@ -202,51 +266,6 @@ class FragmentoMediciones : Fragment() {
         mediciones.addAll(nuevasMediciones)
         adaptadorMedicion.notifyDataSetChanged()
     }
-
-
-    private fun obtenerListaDepartamentos() {
-        val api = RestAPI_Client.retrofitInstance.create(RestAPI_Interface::class.java)
-        val call = api.getDepartamentos()
-
-        call.enqueue(object : Callback<List<DepartamentoDTO>> {
-            override fun onResponse(
-                call: Call<List<DepartamentoDTO>>,
-                response: Response<List<DepartamentoDTO>>
-            ) {
-                if (response.isSuccessful) {
-                    // Actualizar la lista de departamentos
-                    departamentos.clear()
-                    departamentos.addAll(response.body() ?: emptyList())
-                    // Notificar al adaptador del Spinner sobre los cambios
-                    adapter.notifyDataSetChanged()
-                } else {
-                    // Manejar la respuesta no exitosa, si es necesario
-                    // Aquí puedes mostrar un mensaje de error o realizar otras acciones
-                }
-            }
-
-            override fun onFailure(call: Call<List<DepartamentoDTO>>, t: Throwable) {
-                // Manejar la falla en la solicitud, si es necesario
-                // Aquí puedes mostrar un mensaje de error o realizar otras acciones
-            }
-        })
-    }
-
-    private fun <T> Call<T>.enqueue(callback: Callback<T>) {
-        this.enqueue(object : Callback<T> {
-            override fun onResponse(call: Call<T>, response: Response<T>) {
-                callback.onResponse(call, response)
-            }
-
-            override fun onFailure(call: Call<T>, t: Throwable) {
-                callback.onFailure(call, t)
-            }
-        })
-    }
-}
-
-private fun <T> Call<T>.enqueue(callback: Callback<List<DepartamentoDTO>>) {
-
 }
 
 

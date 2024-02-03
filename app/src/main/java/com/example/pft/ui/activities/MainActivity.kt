@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this@MainActivity, NavActivity::class.java)
                         .putExtra("usuarios", usuarioLogin))
                 } else {
-                    showToast("Error en el login. Código: ${response.code()}")
                     showToast("Usuario o Contraseña incorrectos")
                 }
             }

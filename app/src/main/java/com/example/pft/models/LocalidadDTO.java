@@ -1,43 +1,42 @@
 package com.example.pft.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DepartamentoDTO {
+public class LocalidadDTO {
 
-
-    @SerializedName("idDepartamento")
+    @SerializedName("idLocalidad")
     @Expose
-    private Long IdDepartamento;
+    private Long IdLocalidad;
 
     @SerializedName("nombre")
     @Expose
     private String nombre;
 
-    public DepartamentoDTO() {
-        super();
 
+
+
+    public LocalidadDTO() {
+        super();
+        // TODO Auto-generated constructor stub
     }
 
 
 
-    public DepartamentoDTO( Long idDepartamento,  String nombre) {
+    public LocalidadDTO(Long idLocalidad, String nombre) {
         super();
-        IdDepartamento = idDepartamento;
+        IdLocalidad = idLocalidad;
         this.nombre = nombre;
     }
 
 
 
-    public Long getIdDepartamento() {
-        return IdDepartamento;
+    public Long getIdLocalidad() {
+        return IdLocalidad;
     }
 
-    public void setIdDepartamento(Long idDepartamento) {
-        IdDepartamento = idDepartamento;
+    public void setIdLocalidad(Long idLocalidad) {
+        IdLocalidad = idLocalidad;
     }
 
     public String getNombre() {
@@ -48,11 +47,11 @@ public class DepartamentoDTO {
         this.nombre = nombre;
     }
 
-
-
     @Override
     public String toString() {
         return nombre;
     }
+
+
 
 }
