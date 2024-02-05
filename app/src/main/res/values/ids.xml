@@ -14,4 +14,5 @@
     <item name="medicion1TextView" type="id" />
     <item name="medicion2TextView" type="id" />
     <item name="fragmento_mediciones_container" type="id" />
+    <item name="fragmentoInicio" type="id" />
 </resources>
