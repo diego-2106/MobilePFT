@@ -10,4 +10,12 @@
 
         <item name="android:logo">@drawable/logo_light</item>
     </style>
+
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat">
+        <!-- Otros atributos de estilo para el tema oscuro -->
+        <item name="android:textColor">@color/colorTextoOscuro</item>
+        <item name="android:background">@color/colorFondoOscuro</item>
+    </style>
+
 </resources>

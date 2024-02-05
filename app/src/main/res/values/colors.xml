@@ -6,4 +6,10 @@
     <color name="colorFragment1">#FB7F7F</color>
     <color name="view_navBg">#00AAE4</color>
     <color name="underline">#BDB8B8</color>
+
+    <color name="colorTextoClaro">#000000</color>
+    <color name="colorFondoClaro">#FFFFFF</color>
+
+    <color name="colorTextoOscuro">#FFFFFF</color>
+    <color name="colorFondoOscuro">#000000</color>
 </resources>

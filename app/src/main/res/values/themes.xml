@@ -17,4 +17,11 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+
+    <style name="AppTheme1" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Otros atributos de estilo para el tema claro -->
+        <item name="android:textColor">@color/colorTextoClaro</item>
+        <item name="android:background">@color/colorFondoClaro</item>
+    </style>
 </resources>

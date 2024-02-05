@@ -122,15 +122,6 @@ public class UsuarioDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "UsuarioDTO{" +
-                "idU=" + idUsuario +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", nombreUsuario='" + nombreUsuario + '\'' +
-                ", contrasenia='" + contrasenia + '\'' +
-                ", correo='" + correo + '\'' +
-                ", rol='" + rol + '\'' +
-                ", activo=" + activo +
-                '}';
+        return nombre + " " + apellido;
     }
 }

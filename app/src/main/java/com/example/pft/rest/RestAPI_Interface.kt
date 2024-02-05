@@ -1,5 +1,7 @@
 package com.example.pft.rest
 
+import com.example.pft.models.ActividadDeCampoDTO
+import com.example.pft.models.DatoMedidaDTO
 import com.example.pft.models.DepartamentoDTO
 import com.example.pft.models.LocalidadDTO
 import com.example.pft.models.LoginBody
@@ -20,4 +22,12 @@ interface RestAPI_Interface {
 
     @GET("departamentos/listarLocalidades")
     fun getLocalidades(): Call<List<LocalidadDTO>>
+
+    @GET("actividades/listarActividades")
+    fun getActividades(): Call<List<ActividadDeCampoDTO>>
+
+    @GET("medidas/listarDatosMedida")
+    fun getDatosMedida(): Call<List<DatoMedidaDTO>>
+
+
 }
