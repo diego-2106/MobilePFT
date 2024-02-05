@@ -1,5 +1,6 @@
 package com.example.pft.ui.activities
 
+import ListadoActividades
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -65,10 +66,6 @@ class NavActivity : AppCompatActivity() {
                 R.id.nav_home -> {
                     Toast.makeText(applicationContext, "Clickeaste Inicio", Toast.LENGTH_SHORT).show()
                     // Cargar un fragmento
-                    val fragment = FragmentoInicio()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, fragment)
-                        .commit()
                 }
                 R.id.mediciones -> {
                     Toast.makeText(applicationContext, "Clickeaste Mediciones", Toast.LENGTH_SHORT).show()
@@ -154,4 +151,8 @@ class NavActivity : AppCompatActivity() {
 
         builder.create().show()
     }
+
+
+
+
 }
