@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.example.pft.models.ActividadDeCampoDTO
 import com.example.pft.models.DatoMedidaDTO
 import com.example.pft.models.DepartamentoDTO
@@ -19,6 +20,7 @@ import com.example.pft.models.LocalidadDTO
 import com.example.pft.models.MedicionesDTO
 import com.example.pft.rest.RestAPI_Client
 import com.example.pft.rest.RestAPI_Interface
+import com.example.pft.ui.adapters.MedicionesAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,6 +52,7 @@ class FragmentoMediciones : Fragment() {
 
     private lateinit var adapterActividades: ArrayAdapter<ActividadDeCampoDTO>
     private val actividadesDeCampo = mutableListOf<ActividadDeCampoDTO>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

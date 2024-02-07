@@ -25,7 +25,7 @@ class FragmentoVersion : Fragment() {
         // Configurar el ImageBtn para abrir la configuración de aplicaciones
         val buttonOpenAppSettings = view.findViewById<ImageButton>(R.id.button_info_app)
         buttonOpenAppSettings.setOnClickListener {
-            val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
             val uri = Uri.fromParts("package", requireActivity().packageName, null)
             intent.data = uri
             startActivity(intent)
