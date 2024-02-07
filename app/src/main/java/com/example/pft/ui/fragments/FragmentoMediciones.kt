@@ -171,12 +171,13 @@ class FragmentoMediciones : Fragment() {
                 call: Call<List<ActividadDeCampoDTO>>,
                 response: Response<List<ActividadDeCampoDTO>>
             ) {
-                if(response.isSuccessful)
+                if (response.isSuccessful) {
                     actividadesDeCampo.clear()
                     actividadesDeCampo.addAll(response.body() as List<ActividadDeCampoDTO>)
                     adapterActividades.notifyDataSetChanged()
-            }
+                }
 
+            }
             override fun onFailure(call: Call<List<ActividadDeCampoDTO>>, t: Throwable) {
                 TODO("Not yet implemented")
             }
@@ -187,12 +188,13 @@ class FragmentoMediciones : Fragment() {
                 call: Call<List<DatoMedidaDTO>>,
                 response: Response<List<DatoMedidaDTO>>
             ) {
-                if (response.isSuccessful)
+                if (response.isSuccessful) {
                     datosMedida.clear()
                     datosMedida.addAll(response.body() as List<DatoMedidaDTO>)
                     adapterDatosMedida.notifyDataSetChanged()
-            }
+                }
 
+                }
             override fun onFailure(call: Call<List<DatoMedidaDTO>>, t: Throwable) {
                 TODO("Not yet implemented")
             }

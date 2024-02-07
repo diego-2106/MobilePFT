@@ -94,6 +94,8 @@
             android:textColor="@color/black"
             android:textColorHint="#939393" />
 
+
+
         <EditText
             android:id="@+id/medicionFecha"
             android:layout_width="match_parent"

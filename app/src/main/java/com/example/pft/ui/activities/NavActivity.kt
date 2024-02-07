@@ -1,6 +1,5 @@
 package com.example.pft.ui.activities
 
-import ListadoActividades
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -16,7 +15,6 @@ import com.example.pft.ui.fragments.FragmentoMediciones
 import com.example.pft.R
 import com.example.pft.models.UsuarioDTO
 import com.example.pft.ui.fragments.FragmentoAjustes
-import com.example.pft.ui.fragments.FragmentoInicio
 import com.example.pft.ui.fragments.FragmentoListaMediciones
 import com.example.pft.ui.fragments.FragmentoVersion
 import com.google.android.material.navigation.NavigationView
@@ -38,11 +36,6 @@ class NavActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        // Verificar si debemos abrir el fragmento de inicio
-        if (intent.getStringExtra("FRAGMENT_NAME") == "Inicio") {
-            cargarFragmentoInicio()
-        }
 
 
         // Obtener el objeto UsuarioDTO del Intent
@@ -117,14 +110,6 @@ class NavActivity : AppCompatActivity() {
         }
     }
 
-    private fun cargarFragmentoInicio() {
-        // Crear una instancia del FragmentoInicio
-        val fragmentoInicio = FragmentoInicio()
-        // Iniciar una transacción de fragmentos para agregar el FragmentoInicio al contenedor
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragmentoInicio) // Asegúrate de que R.id.contenedor es el ID de tu FrameLayout en NavActivity
-            .commit()
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {

@@ -5,6 +5,7 @@ import com.example.pft.models.DatoMedidaDTO
 import com.example.pft.models.DepartamentoDTO
 import com.example.pft.models.LocalidadDTO
 import com.example.pft.models.LoginBody
+import com.example.pft.models.MedicionesDTO
 import com.example.pft.models.UsuarioDTO
 import retrofit2.Call
 import retrofit2.http.Body
@@ -29,5 +30,9 @@ interface RestAPI_Interface {
     @GET("medidas/listarDatosMedida")
     fun getDatosMedida(): Call<List<DatoMedidaDTO>>
 
+    @GET("medicion/listarMediciones")
+    fun getMediciones(): Call<List<MedicionesDTO>>
 
+    @POST("registros/crear")
+    fun addRegistro(@Body registro: MedicionesDTO): Call<Void>
 }
