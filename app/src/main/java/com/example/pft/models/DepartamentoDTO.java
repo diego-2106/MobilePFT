@@ -50,7 +50,8 @@ public class DepartamentoDTO {
 
     @Override
     public String toString() {
-        return nombre;
+
+        return nombre + IdDepartamento;
     }
 
 }
