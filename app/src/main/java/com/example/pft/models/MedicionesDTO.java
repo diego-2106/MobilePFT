@@ -3,7 +3,9 @@ package com.example.pft.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class MedicionesDTO {
 
@@ -21,7 +23,7 @@ public class MedicionesDTO {
 
     @SerializedName("fecha")
     @Expose
-    private Date fecha;
+    private String fecha;
 
     @SerializedName("observaciones")
     @Expose
@@ -35,10 +37,6 @@ public class MedicionesDTO {
     @Expose
     private Long datoMedida;
 
-    @SerializedName("estado")
-    @Expose
-    private String estado;
-
 
     public MedicionesDTO() {
         super();
@@ -47,16 +45,20 @@ public class MedicionesDTO {
 
 
     public MedicionesDTO(long departamento, long localidad, String valor, Date fecha, String observaciones,
-                       Long actividad, Long datoMedida, String estado) {
+                       Long actividad, Long datoMedida) {
         super();
         this.departamento = departamento;
         this.localidad = localidad;
         this.valor = valor;
-        this.fecha = fecha;
+
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC-8"));
+        this.fecha = dateFormat.format(fecha);
+
         this.observaciones = observaciones;
         this.actividad = actividad;
         this.datoMedida = datoMedida;
-        this.estado = estado;
     }
 
 
@@ -90,12 +92,12 @@ public class MedicionesDTO {
     }
 
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -130,21 +132,12 @@ public class MedicionesDTO {
     }
 
 
-    public String getEstado() {
-        return estado;
-    }
-
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
 
     @Override
     public String toString() {
         return "MedicionDTO [departamento=" + departamento + ", localidad=" + localidad + ", valor=" + valor
                 + ", fecha=" + fecha + ", observaciones=" + observaciones + ", actividad=" + actividad + ", datoMedida="
-                + datoMedida + ", estado=" + estado + "]";
+                + datoMedida + "]";
     }
 
 

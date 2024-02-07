@@ -1,5 +1,6 @@
 package com.example.pft.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,24 +8,36 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.pft.R
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
 import com.example.pft.models.ActividadDeCampoDTO
 import com.example.pft.models.DatoMedidaDTO
 import com.example.pft.models.DepartamentoDTO
 import com.example.pft.models.LocalidadDTO
+import com.example.pft.models.MedicionesDTO
 import com.example.pft.rest.RestAPI_Client
 import com.example.pft.rest.RestAPI_Interface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 
 class FragmentoMediciones : Fragment() {
 
     private lateinit var spinnerDepartamento: Spinner
-    private lateinit var spinnerLocalidades: Spinner
-    private lateinit var spinnerActividades: Spinner
-    private lateinit var spinnerDatoMedida: Spinner
+    private lateinit var spinnerLocalidad: Spinner
+    private lateinit var spinnerActividad: Spinner
+    private lateinit var spinnerDatoMedidas: Spinner
+
+    private lateinit var saveButton: Button
+
+    private lateinit var medicionValor: EditText
+    private lateinit var medicionFecha: EditText
+    private lateinit var medicionObservaciones: EditText
 
     private lateinit var adapterDatosMedida: ArrayAdapter<DatoMedidaDTO>
     private val datosMedida = mutableListOf<DatoMedidaDTO>()
@@ -48,7 +61,6 @@ class FragmentoMediciones : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         adapterDatosMedida = ArrayAdapter(
             requireContext(),
@@ -109,7 +121,6 @@ class FragmentoMediciones : Fragment() {
         val restApiDatoMedida =
             RestAPI_Client.retrofitInstance.create(RestAPI_Interface::class.java)
         val call3 = restApiDatoMedida.getDatosMedida()
-
 
         //Se rellena el spinner de Dptos
         call.enqueue(object : Callback<List<DepartamentoDTO>> {
@@ -186,9 +197,112 @@ class FragmentoMediciones : Fragment() {
 
         })
 
-    }
+        spinnerDepartamento = view.findViewById(R.id.spinnerDepartamentos)
+        spinnerLocalidad = view.findViewById(R.id.spinnerLocalidades)
+        spinnerActividad = view.findViewById(R.id.spinnerActividades)
+        spinnerDatoMedidas = view.findViewById(R.id.spinnerDatoMedida)
+        medicionValor = view.findViewById(R.id.medicionValor)
+        medicionFecha = view.findViewById(R.id.medicionFecha)
+        medicionObservaciones = view.findViewById(R.id.medicionObservaciones)
 
+        saveButton = view.findViewById(R.id.saveButton)
+
+        saveButton.setOnClickListener {
+            // Obtener los datos de los campos
+            val departamentoId =
+                (spinnerDepartamento.selectedItem as? DepartamentoDTO)?.idDepartamento
+            val localidadId = (spinnerLocalidad.selectedItem as? LocalidadDTO)?.idLocalidad
+            val actividadId = (spinnerActividad.selectedItem as? ActividadDeCampoDTO)?.idActividad
+            val datoMedidaId = (spinnerDatoMedidas.selectedItem as? DatoMedidaDTO)?.idDatoMedida
+            val valor = medicionValor.text.toString().trim()
+            val fecha = medicionFecha.text.toString().trim()
+            val observaciones = medicionObservaciones.text.toString().trim()
+
+            // Verificar si algún campo está vacío
+            if (departamentoId == null || localidadId == null || actividadId == null || datoMedidaId == null || valor.isEmpty() || fecha.isEmpty() || observaciones.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Todos los campos deben estar llenos",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                // Crear objeto MedicionesDTO
+                val medicion = try {
+                    val fechaParsed = SimpleDateFormat("dd-MM-yy").parse(fecha)
+                    MedicionesDTO(
+                        departamentoId,
+                        localidadId,
+                        valor,
+                        fechaParsed,
+                        observaciones,
+                        actividadId,
+                        datoMedidaId
+                    )
+                } catch (e: ParseException) {
+                    null
+                }
+
+                if (medicion != null) {
+                    // Mostrar diálogo de confirmación
+                    val confirmDialog = AlertDialog.Builder(requireContext())
+                        .setTitle("Confirmación")
+                        .setMessage("¿Estás seguro de que deseas agregar esta medición?")
+                        .setIcon(R.drawable.baseline_check_circle_outline_24)
+                        .setPositiveButton("Aceptar") { _, _ ->
+                            // Realizar la llamada al servidor para agregar la medición
+                            val restApi =
+                                RestAPI_Client.retrofitInstance.create(RestAPI_Interface::class.java)
+                            val call = restApi.addRegistro(medicion)
+                            call.enqueue(object : Callback<Void> {
+                                override fun onResponse(
+                                    call: Call<Void>,
+                                    response: Response<Void>
+                                ) {
+                                    if (response.isSuccessful) {
+                                        // La medición se ha agregado exitosamente
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Medición agregada correctamente",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else {
+                                        // La solicitud al servidor fue exitosa pero la medición no se agregó correctamente
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Error al agregar la medición",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<Void>, t: Throwable) {
+                                    // La solicitud al servidor falló
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Error de red al agregar la medición",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            })
+                        }
+                        .setNegativeButton("Cancelar") { dialog, _ ->
+                            dialog.dismiss() // Cerrar el diálogo
+                        }
+                        .create()
+
+                    confirmDialog.show()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Error al convertir la fecha",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
 }
+
 
 
 
