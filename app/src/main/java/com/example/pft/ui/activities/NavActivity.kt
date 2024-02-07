@@ -15,7 +15,6 @@ import com.example.pft.ui.fragments.FragmentoMediciones
 import com.example.pft.R
 import com.example.pft.models.UsuarioDTO
 import com.example.pft.ui.fragments.FragmentoAjustes
-import com.example.pft.ui.fragments.FragmentoListaMediciones
 import com.example.pft.ui.fragments.FragmentoVersion
 import com.google.android.material.navigation.NavigationView
 
@@ -69,7 +68,7 @@ class NavActivity : AppCompatActivity() {
                         .addToBackStack(null)
                         .commit()
                 }
-                R.id.lista_mediciones -> {
+               /* R.id.lista_mediciones -> {
                     Toast.makeText(applicationContext, "Clickeaste Listado de Mediciones", Toast.LENGTH_SHORT).show()
                     // Cargar un fragmento
                     val fragment = FragmentoListaMediciones()
@@ -77,7 +76,7 @@ class NavActivity : AppCompatActivity() {
                         .replace(R.id.fragment_container, fragment)
                         .addToBackStack(null)
                         .commit()
-                }
+                } */
                 R.id.manual -> {
                     Toast.makeText(applicationContext, "Clickeaste Manual", Toast.LENGTH_SHORT).show()
                     // Cargar un fragmento
