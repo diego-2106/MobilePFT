@@ -7,6 +7,7 @@ import com.example.pft.models.ListaMedicionesDTO
 import com.example.pft.models.LocalidadDTO
 import com.example.pft.models.LoginBody
 import com.example.pft.models.MedicionesDTO
+import com.example.pft.models.ModificarMedicionesDTO
 import com.example.pft.models.UsuarioDTO
 import retrofit2.Call
 import retrofit2.http.Body
@@ -39,5 +40,5 @@ interface RestAPI_Interface {
     fun addRegistro(@Body registro: MedicionesDTO): Call<Void>
 
     @PUT("registros/modificar")
-    fun updateRegistro(@Body registro: MedicionesDTO?): Call<Void>
+    fun updateRegistro(@Body registro: ModificarMedicionesDTO?): Call<Void>
 }

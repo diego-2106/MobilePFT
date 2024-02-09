@@ -1,6 +1,7 @@
 package com.example.pft.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -15,7 +16,7 @@ import com.example.pft.models.DatoMedidaDTO
 import com.example.pft.models.DepartamentoDTO
 import com.example.pft.models.ListaMedicionesDTO
 import com.example.pft.models.LocalidadDTO
-import com.example.pft.models.MedicionesDTO
+import com.example.pft.models.ModificarMedicionesDTO
 import com.example.pft.rest.RestAPI_Client
 import com.example.pft.rest.RestAPI_Interface
 import retrofit2.Call
@@ -67,39 +68,59 @@ class ActivityModificar : AppCompatActivity() {
         spinnerDatoMedida.adapter = adapterDatosMedida
 
 
-        // Llenar los spinners con los datos de la medicion seleccionada
         val intent = intent
         if (intent != null && intent.hasExtra("medicion")) {
             val medicion = intent.getSerializableExtra("medicion") as ListaMedicionesDTO
+            val dptoId = intent.getLongExtra("dptoId", -1)
+            val localidadId = intent.getLongExtra("localidadId", -1 )
+            val actividadId = intent.getLongExtra("actividadId", -1)
+            val datomedidaId = intent.getLongExtra("datoMedidaId", -1)
 
-            // Llenar spinner de departamentos
-            val departamentoSeleccionado = medicion.departamento as? DepartamentoDTO
+            Log.d("DEBUG", "Valor de medicion: $medicion")
+            Log.d("DEBUG", "Valor de dptoId: $dptoId")
+            Log.d("DEBUG", "Valor de localidadId: $localidadId")
+            Log.d("DEBUG", "Valor de actividadId: $actividadId")
+            Log.d("DEBUG", "Valor de datomedidaId: $datomedidaId")
+
+            val departamentoId1 = dptoId
+            val localidadId1 = localidadId
+            val actividadId1 = actividadId
+            val datomedidaId1 = datomedidaId
+
+            Log.d("DEBUG", "Valor de departamentoId1: $departamentoId1")
+            Log.d("DEBUG", "Valor de localidadId1: $localidadId1")
+            Log.d("DEBUG", "Valor de actividadId1: $actividadId1")
+            Log.d("DEBUG", "Valor de datomedidaId1: $datomedidaId1")
+
+            val departamentoSeleccionado = departamentoId1
+            Log.d("DEBUG", "Valor de departamentoSeleccionado: $departamentoSeleccionado")
             departamentoSeleccionado?.let { departamento ->
-                val departamentoIndex = departamentos.indexOfFirst { it == departamento }
+                val departamentoIndex = departamentos.indexOfFirst { it?.idDepartamento == departamento }
+                Log.d("DEBUG", "Valor de departamentoIndex: $departamentoIndex")
                 if (departamentoIndex != -1) {
                     spinnerDepartamentos.setSelection(departamentoIndex)
                 }
             }
 
-            val localidadSeleccionada = medicion.localidad as? LocalidadDTO
+            val localidadSeleccionada = localidadId1
             localidadSeleccionada?.let { localidad ->
-                val localidadIndex = localidades.indexOfFirst { it == localidad }
+                val localidadIndex = localidades.indexOfFirst { it?.IdLocalidad == localidad }
                 if (localidadIndex != -1) {
                     spinnerLocalidades.setSelection(localidadIndex)
                 }
             }
 
-            val actividadSeleccionada = medicion.actividad as? ActividadDeCampoDTO
+            val actividadSeleccionada = actividadId1
             actividadSeleccionada?.let { actividad ->
-                val actividadIndex = actividadesDeCampo.indexOfFirst { it == actividad }
+                val actividadIndex = actividadesDeCampo.indexOfFirst { it?.idActividad == actividad }
                 if (actividadIndex != -1) {
                     spinnerActividades.setSelection(actividadIndex)
                 }
             }
 
-            val datoMedidaSeleccionado = medicion.datoMedida as? DatoMedidaDTO
+            val datoMedidaSeleccionado = datomedidaId1
             datoMedidaSeleccionado?.let { datoMedida ->
-                val datoMedidaIndex = datosMedida.indexOfFirst { it == datoMedida }
+                val datoMedidaIndex = datosMedida.indexOfFirst { it?.idDatoMedida == datoMedida }
                 if (datoMedidaIndex != -1) {
                     spinnerDatoMedida.setSelection(datoMedidaIndex)
                 }
@@ -115,8 +136,11 @@ class ActivityModificar : AppCompatActivity() {
             medicionObservaciones.setText(medicion.observaciones)
         }
 
+
+        //Boton de modificar
         val saveButton = findViewById<AppCompatButton>(R.id.saveButton)
         saveButton.setOnClickListener {
+            val medicionId = intent.getLongExtra("medicionId", -1)
 
             // Mostrar un diálogo de confirmación
             AlertDialog.Builder(this)
@@ -138,7 +162,8 @@ class ActivityModificar : AppCompatActivity() {
                         // Crear objeto MedicionesDTO con los datos recolectados
                         val medicion = try {
                             val fechaParsed = SimpleDateFormat("dd-MM-yy").parse(fecha)
-                            MedicionesDTO(
+                            ModificarMedicionesDTO(
+                                medicionId,
                                 departamentoSeleccionado,
                                 localidadSeleccionada,
                                 valor,
@@ -198,6 +223,7 @@ class ActivityModificar : AppCompatActivity() {
                 }
                 .show()
         }
+
         val restApi = RestAPI_Client.retrofitInstance.create(RestAPI_Interface::class.java)
         val callDepartamentos = restApi.getDepartamentos()
         val callLocalidades = restApi.getLocalidades()
@@ -274,32 +300,6 @@ class ActivityModificar : AppCompatActivity() {
             }
         })
     }
-
-
-/*
-    private fun getIndex(spinner: Spinner, value: Long): Int {
-        val adapter = spinner.adapter
-        if (adapter is ArrayAdapter<*>) {
-            for (i in 0 until adapter.count) {
-                val item = adapter.getItem(i)
-                if (item is DepartamentoDTO && item.idDepartamento == value) {
-                    return i
-                } else if (item is LocalidadDTO && item.idLocalidad == value) {
-                    return i
-                } else if (item is ActividadDeCampoDTO && item.idActividad == value) {
-                    return i
-                } else if (item is DatoMedidaDTO && item.idDatoMedida == value) {
-                    return i
-                }
-            }
-        }
-        return 0
-    } */
-
-
-
-
-
 
 
 }
