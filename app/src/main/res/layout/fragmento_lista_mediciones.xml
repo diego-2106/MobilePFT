@@ -7,10 +7,11 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Aquí comienza el RecyclerView -->
     <TextView
         android:id="@+id/textViewTitulo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="376dp"
+        android:layout_height="63dp"
         android:text="Listado de Registros de CA"
         android:textAlignment="center"
         android:textSize="30sp"
@@ -18,16 +19,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Aquí comienza el RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/medicionesRecyclerView"
-        android:layout_width="410dp"
-        android:layout_height="647dp"
+        android:layout_width="408dp"
+        android:layout_height="750dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.592"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewTitulo"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.078"
         tools:listitem="@layout/item_medicion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

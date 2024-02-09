@@ -124,13 +124,13 @@ class NavActivity : AppCompatActivity() {
         builder.setMessage("¿Estás seguro de que deseas cerrar sesión?")
         builder.setIcon(R.drawable.ic_baseline_warning_24)
 
-        builder.setPositiveButton("Cerrar Sesión") { dialogInterface, i ->
+        builder.setPositiveButton("CERRAR SESIÓN") { dialogInterface, i ->
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        builder.setNegativeButton("Cancelar") { dialogInterface, i ->
+        builder.setNegativeButton("CANCELAR") { dialogInterface, i ->
             dialogInterface.dismiss()
         }
 

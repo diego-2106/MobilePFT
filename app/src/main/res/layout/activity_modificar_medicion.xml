@@ -5,32 +5,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+
     android:name=".ui.activities.ActivityModificar"
     >
 
+    <!-- Toolbar -->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="414dp"
+        android:layout_height="73dp"
+        android:background="#6750A4"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/volver"
+        android:layout_width="77dp"
+        android:layout_height="72dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Volver hacia atrás"
+        android:foreground="?attr/selectableItemBackground"
+        android:src="@drawable/ic_arrow_back_ios_24"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         style="@style/AppTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="sans-serif-condensed"
         android:text="Modificación de Registro CA"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </TextView>
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <LinearLayout
         android:layout_width="373dp"
         android:layout_height="662dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="140dp"
         android:layout_marginEnd="5dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"

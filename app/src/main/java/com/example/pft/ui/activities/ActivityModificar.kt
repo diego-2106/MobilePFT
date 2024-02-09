@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -43,9 +44,13 @@ class ActivityModificar : AppCompatActivity() {
     private val actividadesDeCampo = mutableListOf<ActividadDeCampoDTO>()
     private val datosMedida = mutableListOf<DatoMedidaDTO>()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modificar_medicion)
+
+        val volver = findViewById<ImageButton>(R.id.volver)
+        volver.setOnClickListener { onBackPressed() }
 
         spinnerDepartamentos = findViewById(R.id.spinnerDepartamentos)
         adapterDepartamentos = ArrayAdapter(this, android.R.layout.simple_spinner_item, departamentos)
@@ -66,6 +71,8 @@ class ActivityModificar : AppCompatActivity() {
         adapterDatosMedida = ArrayAdapter(this, android.R.layout.simple_spinner_item, datosMedida)
         adapterDatosMedida.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerDatoMedida.adapter = adapterDatosMedida
+
+
 
 
         val intent = intent
@@ -145,8 +152,9 @@ class ActivityModificar : AppCompatActivity() {
             // Mostrar un diálogo de confirmación
             AlertDialog.Builder(this)
                 .setTitle("Confirmar Modificación")
-                .setMessage("¿Estás seguro de que deseas modificar los datos?")
-                .setPositiveButton("Sí") { dialog, which ->
+                .setIcon(R.drawable.baseline_check_circle_outline_24)
+                .setMessage("¿Estás seguro de que deseas modificar esta medición?")
+                .setPositiveButton("ACEPTAR") { dialog, which ->
 
                     val departamentoSeleccionado = (spinnerDepartamentos.selectedItem as? DepartamentoDTO)?.idDepartamento
                     val localidadSeleccionada = (spinnerLocalidades.selectedItem as? LocalidadDTO)?.idLocalidad
@@ -217,7 +225,7 @@ class ActivityModificar : AppCompatActivity() {
                         ).show()
                     }
                 }
-                .setNegativeButton("Cancelar") { dialog, which ->
+                .setNegativeButton("CANCELAR") { dialog, which ->
                     // Manejar la cancelación del diálogo
                     dialog.dismiss()
                 }
