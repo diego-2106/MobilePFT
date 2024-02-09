@@ -44,9 +44,9 @@ class NavActivity : AppCompatActivity() {
         // Verificar si el usuario no es nulo y actualizar los TextViews en el HeaderView
         if (usuario != null) {
             val navigationView: NavigationView = findViewById(R.id.nav_view)
-            val headerView: View = navigationView.getHeaderView(0) // Obtén el primer HeaderView (puede haber más si usas múltiples menús deslizantes)
+            val headerView: View = navigationView.getHeaderView(0) // Obtener el primer HeaderView
 
-            // Actualizar el TextView del nombre del usuario (user_name)
+            // Actualizamos el TextView del nombre del usuario (nombre, apellido) y rol
             val userNameTextView: TextView = headerView.findViewById(R.id.user_name)
             userNameTextView.text = "${usuario.nombre} ${usuario.apellido}    \n" +
                     "${usuario.rol}"

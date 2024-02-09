@@ -24,21 +24,27 @@ interface RestAPI_Interface {
     @GET("departamentos/listarDepartamentos")
     fun getDepartamentos(): Call<List<DepartamentoDTO>>
 
+    /*Localidades*/
     @GET("departamentos/listarLocalidades")
     fun getLocalidades(): Call<List<LocalidadDTO>>
 
+    /*Actividades de Campo*/
     @GET("actividades/listarActividades")
     fun getActividades(): Call<List<ActividadDeCampoDTO>>
 
+    /*Datos de medida*/
     @GET("medidas/listarDatosMedida")
     fun getDatosMedida(): Call<List<DatoMedidaDTO>>
 
+    /*Listado de mediciones*/
     @GET("registros/listarMediciones")
     fun getMediciones(): Call<List<ListaMedicionesDTO>>
 
+    /*Crear las mediciones*/
     @POST("registros/crear")
     fun addRegistro(@Body registro: MedicionesDTO): Call<Void>
 
+    /*Modificar las mediciones*/
     @PUT("registros/modificar")
     fun updateRegistro(@Body registro: ModificarMedicionesDTO?): Call<Void>
 }

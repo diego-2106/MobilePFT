@@ -49,6 +49,7 @@ class ActivityModificar : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modificar_medicion)
 
+        //Boton para volver (en el toolbar)
         val volver = findViewById<ImageButton>(R.id.volver)
         volver.setOnClickListener { onBackPressed() }
 
@@ -78,60 +79,6 @@ class ActivityModificar : AppCompatActivity() {
         val intent = intent
         if (intent != null && intent.hasExtra("medicion")) {
             val medicion = intent.getSerializableExtra("medicion") as ListaMedicionesDTO
-            val dptoId = intent.getLongExtra("dptoId", -1)
-            val localidadId = intent.getLongExtra("localidadId", -1 )
-            val actividadId = intent.getLongExtra("actividadId", -1)
-            val datomedidaId = intent.getLongExtra("datoMedidaId", -1)
-
-            Log.d("DEBUG", "Valor de medicion: $medicion")
-            Log.d("DEBUG", "Valor de dptoId: $dptoId")
-            Log.d("DEBUG", "Valor de localidadId: $localidadId")
-            Log.d("DEBUG", "Valor de actividadId: $actividadId")
-            Log.d("DEBUG", "Valor de datomedidaId: $datomedidaId")
-
-            val departamentoId1 = dptoId
-            val localidadId1 = localidadId
-            val actividadId1 = actividadId
-            val datomedidaId1 = datomedidaId
-
-            Log.d("DEBUG", "Valor de departamentoId1: $departamentoId1")
-            Log.d("DEBUG", "Valor de localidadId1: $localidadId1")
-            Log.d("DEBUG", "Valor de actividadId1: $actividadId1")
-            Log.d("DEBUG", "Valor de datomedidaId1: $datomedidaId1")
-
-            val departamentoSeleccionado = departamentoId1
-            Log.d("DEBUG", "Valor de departamentoSeleccionado: $departamentoSeleccionado")
-            departamentoSeleccionado?.let { departamento ->
-                val departamentoIndex = departamentos.indexOfFirst { it?.idDepartamento == departamento }
-                Log.d("DEBUG", "Valor de departamentoIndex: $departamentoIndex")
-                if (departamentoIndex != -1) {
-                    spinnerDepartamentos.setSelection(departamentoIndex)
-                }
-            }
-
-            val localidadSeleccionada = localidadId1
-            localidadSeleccionada?.let { localidad ->
-                val localidadIndex = localidades.indexOfFirst { it?.IdLocalidad == localidad }
-                if (localidadIndex != -1) {
-                    spinnerLocalidades.setSelection(localidadIndex)
-                }
-            }
-
-            val actividadSeleccionada = actividadId1
-            actividadSeleccionada?.let { actividad ->
-                val actividadIndex = actividadesDeCampo.indexOfFirst { it?.idActividad == actividad }
-                if (actividadIndex != -1) {
-                    spinnerActividades.setSelection(actividadIndex)
-                }
-            }
-
-            val datoMedidaSeleccionado = datomedidaId1
-            datoMedidaSeleccionado?.let { datoMedida ->
-                val datoMedidaIndex = datosMedida.indexOfFirst { it?.idDatoMedida == datoMedida }
-                if (datoMedidaIndex != -1) {
-                    spinnerDatoMedida.setSelection(datoMedidaIndex)
-                }
-            }
 
             // Llenar los EditText
             val medicionValor = findViewById<EditText>(R.id.medicionValor)
@@ -147,9 +94,9 @@ class ActivityModificar : AppCompatActivity() {
         //Boton de modificar
         val saveButton = findViewById<AppCompatButton>(R.id.saveButton)
         saveButton.setOnClickListener {
-            val medicionId = intent.getLongExtra("medicionId", -1)
+            val medicionId = intent.getLongExtra("medicionId", -1) //Obtenemos el ID de la medicion, esto se encuentra en MedicionesAdapter
 
-            // Mostrar un diálogo de confirmación
+            // Dialogo para confirmar
             AlertDialog.Builder(this)
                 .setTitle("Confirmar Modificación")
                 .setIcon(R.drawable.baseline_check_circle_outline_24)
@@ -167,7 +114,7 @@ class ActivityModificar : AppCompatActivity() {
                     // Validar que los valores seleccionados no sean nulos
                     if (departamentoSeleccionado != null && localidadSeleccionada != null &&
                         actividadSeleccionada != null && datoMedidaSeleccionado != null) {
-                        // Crear objeto MedicionesDTO con los datos recolectados
+                        // Crear objeto MedicionesDTO con los datos requeridos, spinners y demas
                         val medicion = try {
                             val fechaParsed = SimpleDateFormat("dd-MM-yy").parse(fecha)
                             ModificarMedicionesDTO(
@@ -179,26 +126,25 @@ class ActivityModificar : AppCompatActivity() {
                                 observaciones,
                                 actividadSeleccionada,
                                 datoMedidaSeleccionado,
-                                 // Agregar el ID de la medicion seleccionada
                             )
                         } catch (e: ParseException) {
                             null
                         }
 
-                        // Enviar solicitud PUT al servidor
+                        // Enviamos la solicitud PUT al server
                         val restApi = RestAPI_Client.retrofitInstance.create(RestAPI_Interface::class.java)
                         val call = restApi.updateRegistro(medicion)
                         call.enqueue(object : Callback<Void> {
                             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                                 if (response.isSuccessful) {
-                                    // Manejar la respuesta exitosa del servidor
+                                    // En caso de que sea exitoso se manda ese Toast
                                     Toast.makeText(
                                         applicationContext,
                                         "Datos modificados exitosamente",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 } else {
-                                    // Manejar la respuesta del servidor si no fue exitosa
+                                    // Si hubo un error de algun tipo te tira ese toast
                                     Toast.makeText(
                                         applicationContext,
                                         "Error al modificar datos. Inténtalo de nuevo más tarde.",
@@ -208,7 +154,7 @@ class ActivityModificar : AppCompatActivity() {
                             }
 
                             override fun onFailure(call: Call<Void>, t: Throwable) {
-                                // Manejar el error de la solicitud
+                                // Si la solicitud al endpoint falla te da ese toast
                                 Toast.makeText(
                                     applicationContext,
                                     "Error al modificar datos: ${t.message}",
@@ -217,7 +163,7 @@ class ActivityModificar : AppCompatActivity() {
                             }
                         })
                     } else {
-                        // Mostrar un mensaje de error si algún valor es nulo
+                        // Validar que no sean nulos los campos
                         Toast.makeText(
                             applicationContext,
                             "Por favor, completa todos los campos antes de modificar.",
@@ -226,7 +172,7 @@ class ActivityModificar : AppCompatActivity() {
                     }
                 }
                 .setNegativeButton("CANCELAR") { dialog, which ->
-                    // Manejar la cancelación del diálogo
+                    // Cerrar el dialog cuando se presiona cancelar
                     dialog.dismiss()
                 }
                 .show()

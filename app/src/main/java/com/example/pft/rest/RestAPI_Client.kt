@@ -26,7 +26,7 @@ object RestAPI_Client {
         get() {
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-                    .baseUrl("http://" + Host.ip + "/AEWebSynergiaPIP/rest/") // Añade la barra al final
+                    .baseUrl("http://" + Host.ip + "/AEWebSynergiaPIP/rest/")
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()

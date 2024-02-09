@@ -20,12 +20,13 @@ class FragmentoAjustes : Fragment() {
 
         val switchModoOscuro = view.findViewById<Switch>(R.id.switchModoOscuro)
 
-        // Cargar la preferencia guardada
+        // Cargar la preferencia guardada osea, si selecciono modo oscuro y no lo desactivo, se queda activado el item
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return view
         val modoOscuroActivado = sharedPref.getBoolean(getString(R.string.pref_modo_oscuro), false)
 
         switchModoOscuro.isChecked = modoOscuroActivado
 
+        //Se checkea si esta activo o no, y habilita o no el modo
         switchModoOscuro.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
