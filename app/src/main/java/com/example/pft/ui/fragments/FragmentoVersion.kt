@@ -19,7 +19,7 @@ class FragmentoVersion : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // Inflamos el layout para el fragmento
         val view = inflater.inflate(R.layout.fragmento_version, container, false)
 
         // Configurar el ImageBtn para abrir la configuración de aplicaciones

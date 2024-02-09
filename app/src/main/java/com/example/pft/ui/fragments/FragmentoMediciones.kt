@@ -65,6 +65,7 @@ class FragmentoMediciones : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Spinner datos medida
         adapterDatosMedida = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
@@ -72,7 +73,6 @@ class FragmentoMediciones : Fragment() {
         )
 
         adapterDatosMedida.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
         val spinnerDatoMedida: Spinner = view.findViewById(R.id.spinnerDatoMedida)
         spinnerDatoMedida.adapter = adapterDatosMedida
 
@@ -84,7 +84,6 @@ class FragmentoMediciones : Fragment() {
         )
 
         adapterLocalidad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
         val spinnerLocalidades: Spinner = view.findViewById(R.id.spinnerLocalidades)
         spinnerLocalidades.adapter = adapterLocalidad
 
@@ -111,6 +110,7 @@ class FragmentoMediciones : Fragment() {
         val spinnerActividades: Spinner = view.findViewById(R.id.spinnerActividades)
         spinnerActividades.adapter = adapterActividades
 
+        //Aca definimos cada una de las llamadas para los spinners
         val restApi = RestAPI_Client.retrofitInstance.create(RestAPI_Interface::class.java)
         val call = restApi.getDepartamentos()
 
@@ -158,7 +158,7 @@ class FragmentoMediciones : Fragment() {
             }
 
             override fun onFailure(call: Call<List<LocalidadDTO>>, t: Throwable) {
-                // Manejar el fallo de manera adecuada
+                // Manejar el fallo
             }
         })
 
@@ -221,7 +221,7 @@ class FragmentoMediciones : Fragment() {
             val fecha = medicionFecha.text.toString().trim()
             val observaciones = medicionObservaciones.text.toString().trim()
 
-            // Verificar si algún campo está vacío
+            // Verificamos si hay algun campo vacio, si alguno es nulo no deja hacer la medicion
             if (departamentoId == null || localidadId == null || actividadId == null || datoMedidaId == null || valor.isEmpty() || fecha.isEmpty() || observaciones.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
@@ -252,7 +252,7 @@ class FragmentoMediciones : Fragment() {
                         .setMessage("¿Estás seguro de que deseas agregar esta medición?")
                         .setIcon(R.drawable.baseline_check_circle_outline_24)
                         .setPositiveButton("Aceptar") { _, _ ->
-                            // Realizar la llamada al servidor para agregar la medición
+                            // Realizar la llamada a la API para agregar la medición
                             val restApi =
                                 RestAPI_Client.retrofitInstance.create(RestAPI_Interface::class.java)
                             val call = restApi.addRegistro(medicion)
@@ -269,7 +269,7 @@ class FragmentoMediciones : Fragment() {
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     } else {
-                                        // La solicitud al servidor fue exitosa pero la medición no se agregó correctamente
+                                        // La solicitud al servidor fue correcta pero la medición no se agregó
                                         Toast.makeText(
                                             requireContext(),
                                             "Error al agregar la medición",

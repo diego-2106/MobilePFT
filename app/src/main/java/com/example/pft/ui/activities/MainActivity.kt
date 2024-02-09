@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+    // Aca hacemos la llamada al endpoint de login y usamos el LoginBody para usar los datos necesarios
     private fun doLogin(username: String, password: String) {
         val loginRequest = LoginBody(username, password)
 

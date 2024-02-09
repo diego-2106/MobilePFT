@@ -33,24 +33,24 @@ class FragmentoListaMediciones : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Infla el layout para este fragmento
+        //Inflamos el layout
         return inflater.inflate(R.layout.fragmento_lista_mediciones, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Configura el RecyclerView
+        //Configura el RecyclerView
         medicionesRecyclerView = view.findViewById(R.id.medicionesRecyclerView)
         medicionesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         medicionesAdapter = MedicionesAdapter(medicionesList)
         medicionesRecyclerView.adapter = medicionesAdapter
 
-        // Obtener las mediciones desde la API y actualizar la lista
-
+        // Obtenemos la lista de mediciones desde la API
         val restApi = RestAPI_Client.retrofitInstance.create(RestAPI_Interface::class.java)
         val call = restApi.getMediciones()
 
+        //Se configura el llamado y la respuesta, se actualizan los datos del listado y demas.
         call.enqueue(object : Callback<List<ListaMedicionesDTO>> {
             override fun onResponse(call: Call<List<ListaMedicionesDTO>>, response: Response<List<ListaMedicionesDTO>>) {
                 if (response.isSuccessful) {
