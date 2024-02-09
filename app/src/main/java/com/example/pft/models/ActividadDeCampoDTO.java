@@ -1,9 +1,13 @@
 package com.example.pft.models;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ActividadDeCampoDTO {
+import java.io.Serializable;
+
+public class ActividadDeCampoDTO implements Serializable {
 
     @SerializedName("idActividad")
     @Expose

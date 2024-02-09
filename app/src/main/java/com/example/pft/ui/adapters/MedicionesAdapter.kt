@@ -45,11 +45,21 @@ class MedicionesAdapter(
         holder.tvFecha.text = medicion.fecha
         holder.tvId.text = medicion.idMedicion.toString()
 
+        val medicionId = medicion?.idMedicion
+        val departamentoId = medicion?.departamento?.idDepartamento
+        val localidadId = medicion?.localidad?.idLocalidad
+        val actividadId = medicion?.actividad?.idActividad
+        val datomedidaId = medicion?.datoMedida?.idDatoMedida
 
         holder.btnModificar.setOnClickListener {
             val context = holder.itemView.context
             val intent = Intent(context, ActivityModificar::class.java)
             intent.putExtra("medicion", medicion)
+            intent.putExtra("medicionId", medicionId)
+            intent.putExtra("dptoId", departamentoId)
+            intent.putExtra("localidadId", localidadId)
+            intent.putExtra("actividadId", actividadId)
+            intent.putExtra("datoMedidaId", datomedidaId)
             context.startActivity(intent)
         }
 

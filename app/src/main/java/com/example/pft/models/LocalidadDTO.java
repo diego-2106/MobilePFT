@@ -3,9 +3,10 @@ package com.example.pft.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class LocalidadDTO {
+public class LocalidadDTO implements Serializable {
 
     @SerializedName("idLocalidad")
     @Expose
