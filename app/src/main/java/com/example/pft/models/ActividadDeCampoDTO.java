@@ -55,7 +55,7 @@ public class ActividadDeCampoDTO {
 
     @Override
     public String toString() {
-        return "ID Actividad " + idActividad + " | " + " Usuario: " + usuario;
+        return "ID Actividad " + idActividad + usuario;
     }
 
 

@@ -3,16 +3,18 @@ package com.example.pft.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 public class DepartamentoDTO {
 
 
     @SerializedName("idDepartamento")
     @Expose
-    private Long IdDepartamento;
+    public Long IdDepartamento;
 
     @SerializedName("nombre")
     @Expose
-    private String nombre;
+    public String nombre;
 
     public DepartamentoDTO() {
         super();
@@ -51,7 +53,8 @@ public class DepartamentoDTO {
     @Override
     public String toString() {
 
-        return nombre + IdDepartamento;
+        return nombre;
     }
+
 
 }

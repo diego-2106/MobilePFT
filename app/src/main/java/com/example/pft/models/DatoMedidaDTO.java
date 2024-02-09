@@ -4,7 +4,9 @@ package com.example.pft.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DatoMedidaDTO {
+import java.io.Serializable;
+
+public class DatoMedidaDTO implements Serializable {
 
     @SerializedName("idDatoMedida")
     @Expose

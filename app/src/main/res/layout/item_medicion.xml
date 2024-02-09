@@ -6,13 +6,24 @@
     android:padding="16dp"
     android:gravity="center_vertical">
 
+
+    <TextView
+        android:id="@+id/medicionId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="17sp"
+
+        />
+
     <TextView
         android:id="@+id/medicionValor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="17sp"
-        android:text="Valor"/>
+
+        />
 
     <TextView
         android:id="@+id/medicionFecha"
@@ -20,14 +31,15 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="17sp"
-        android:text="Fecha"/>
 
-    <TextView
-        android:id="@+id/medicionObservaciones"
-        android:layout_width="0dp"
+        />
+
+    <Button
+        android:id="@+id/botonModificar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="17sp"
-        android:text="Observaciones"/>
+        android:text="Modificar"
+        android:textSize="14sp"/>
+
 
 </LinearLayout>

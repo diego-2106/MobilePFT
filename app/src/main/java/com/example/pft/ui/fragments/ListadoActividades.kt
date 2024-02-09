@@ -45,7 +45,6 @@ class ListadoActividades : Fragment() {
                 if (response.isSuccessful) {
                     actividades.clear()
                     actividades.addAll(response.body() ?: emptyList())
-
                     // Notifica cambios en el hilo principal
                     requireActivity().runOnUiThread {
                         if (adapter != null) {

@@ -3,15 +3,17 @@ package com.example.pft.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 public class LocalidadDTO {
 
     @SerializedName("idLocalidad")
     @Expose
-    private Long IdLocalidad;
+    public Long IdLocalidad;
 
     @SerializedName("nombre")
     @Expose
-    private String nombre;
+    public String nombre;
 
 
 
@@ -51,7 +53,6 @@ public class LocalidadDTO {
     public String toString() {
         return nombre;
     }
-
 
 
 }
